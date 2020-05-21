@@ -1,3 +1,25 @@
+
+Table of Contents
+=================
+
+   * [Tomcat面试题](#tomcat面试题)
+      * [1.Tomcat是什么？](#1tomcat是什么)
+      * [2.Tomcat的缺省端口是多少，怎么修改](#2tomcat的缺省端口是多少怎么修改)
+      * [3.Tomcat有哪几种Connector 运行模式(优化)？](#3tomcat有哪几种connector-运行模式优化)
+      * [4.Tomcat有几种部署方式？](#4tomcat有几种部署方式)
+      * [5.Tomcat容器是如何创建servlet类实例？用到了什么原理？](#5tomcat容器是如何创建servlet类实例用到了什么原理)
+      * [6.Tomcat工作模式](#6tomcat工作模式)
+      * [7.Tomcat顶层架构](#7tomcat顶层架构)
+         * [(1). Tomcat顶层架构小结](#1-tomcat顶层架构小结)
+      * [8.Connector和Container的微妙关系](#8connector和container的微妙关系)
+      * [9.Container架构分析](#9container架构分析)
+      * [10.Container如何处理请求的](#10container如何处理请求的)
+      * [11.总结](#11总结)
+
+***
+
+# Tomcat面试题
+
 ## 1.Tomcat是什么？
 
 Tomcat 服务器Apache软件基金会项目中的一个核心项目，是一个免费的开放源代码的Web 应用服务器，属于轻量级应用服务器，在中小型系统和并发访问用户不是很多的场合下被普遍使用，是开发和调试JSP 程序的首选。
@@ -15,6 +37,7 @@ Tomcat 服务器Apache软件基金会项目中的一个核心项目，是一个�
                connectionTimeout="20000" 
                redirectPort="8443" />
 ```
+
 ## 3.Tomcat有哪几种Connector 运行模式(优化)？
 
 下面，我们先大致了解Tomcat Connector的三种运行模式。
@@ -23,7 +46,7 @@ Tomcat 服务器Apache软件基金会项目中的一个核心项目，是一个�
 
 **配制项**：protocol=”HTTP/1.1”
 
-**①、NIO**：同步非阻塞IO
+**①.NIO**：同步非阻塞IO
 
 利用Java的异步IO处理，可以通过少量的线程处理大量的请求，可以复用同一个线程处理多个connection(多路复用)。
 
@@ -35,7 +58,7 @@ Tomcat7必须修改Connector配置来启动。
 
 **备注**：我们常用的Jetty，Mina，ZooKeeper等都是基于java nio实现.
 
-**②、APR**：即Apache Portable Runtime，从操作系统层面解决io阻塞问题。**AIO方式，**异步非阻塞IO(Java NIO2又叫AIO) 主要与NIO的区别主要是操作系统的底层区别.可以做个比喻:比作快递，NIO就是网购后要自己到官网查下快递是否已经到了(可能是多次)，然后自己去取快递；AIO就是快递员送货上门了(不用关注快递进度)。
+**②.APR**：即Apache Portable Runtime，从操作系统层面解决io阻塞问题。**AIO方式，**异步非阻塞IO(Java NIO2又叫AIO) 主要与NIO的区别主要是操作系统的底层区别.可以做个比喻:比作快递，NIO就是网购后要自己到官网查下快递是否已经到了(可能是多次)，然后自己去取快递；AIO就是快递员送货上门了(不用关注快递进度)。
 
 **配制项**：protocol=”org.apache.coyote.http11.Http11AprProtocol”
 
@@ -49,10 +72,12 @@ Tomcat7必须修改Connector配置来启动。
 * 使用Manager App控制台部署：在tomcat主页点击“Manager App” 进入应用管理控制台，可以指定一个web应用的路径或war文件。
 * 修改conf/server.xml文件部署：修改conf/server.xml文件，增加Context节点可以部署应用。
 * 增加自定义的Web部署文件：在conf/Catalina/localhost/ 路径下增加 xyz.xml文件，内容是Context节点，可以部署应用。
+
 ## 5.Tomcat容器是如何创建servlet类实例？用到了什么原理？
 
 * 当容器启动时，会读取在webapps目录下所有的web应用中的web.xml文件，然后对 xml文件进行解析，并读取servlet注册信息。然后，将每个应用中注册的servlet类都进行加载，并通过 反射的方式实例化。（有时候也是在第一次请求时实例化）
 * 在servlet注册时加上1如果为正数，则在一开始就实例化，如果不写或为负数，则第一次请求实例化。
+
 ## 6.Tomcat工作模式
 
 Tomcat作为servlet容器，有三种工作模式：
@@ -75,6 +100,7 @@ Tomcat作为servlet容器，有三种工作模式：
 * Engine、Host、Context、Wrapper相关的概念关系；
 * Container是如何处理请求的；
 * Tomcat用到的相关设计模式；
+
 ## 7.Tomcat顶层架构
 
 俗话说，站在巨人的肩膀上看世界，一般学习的时候也是先总览一下整体，然后逐个部分个个击破，最后形成思路，了解具体细节，Tomcat的结构很复杂，但是 Tomcat 非常的模块化，找到了 Tomcat 最核心的模块，问题才可以游刃而解，了解了 Tomcat 的整体架构对以后深入了解 Tomcat 来说至关重要！
@@ -108,7 +134,7 @@ Service主要包含两个部分：Connector和Container。从上图中可以看�
 
 Server标签设置的端口号为8005，shutdown=”SHUTDOWN” ，表示在8005端口监听“SHUTDOWN”命令，如果接收到了就会关闭Tomcat。一个Server有一个Service，当然还可以进行配置，一个Service有多个Connector，Service左边的内容都属于Container的，Service下边是Connector。
 
-### ①. Tomcat顶层架构小结
+### (1). Tomcat顶层架构小结
 
 * Tomcat中只有一个Server，一个Server可以有多个Service，一个Service可以有多个Connector和一个Container；
 * Server掌管着整个Tomcat的生死大权；
@@ -197,6 +223,7 @@ Pipeline的处理流程图如下（图D）：
 * 在Engine的管道中依次会执行EngineValve1、EngineValve2等等，最后会执行StandardEngineValve，在StandardEngineValve中会调用Host管道，然后再依次执行Host的HostValve1、HostValve2等，最后在执行StandardHostValve，然后再依次调用Context的管道和Wrapper的管道，最后执行到StandardWrapperValve。
 * 当执行到StandardWrapperValve的时候，会在StandardWrapperValve中创建FilterChain，并调用其doFilter方法来处理请求，这个FilterChain包含着我们配置的与请求相匹配的Filter和Servlet，其doFilter方法会依次调用所有的Filter的doFilter方法和Servlet的service方法，这样请求就得到了处理！
 * 当所有的Pipeline-Valve都执行完之后，并且处理完了具体的请求，这个时候就可以将返回的结果交给Connector了，Connector在通过Socket的方式将结果返回给客户端。
+
 ## 11.总结
 
 至此，我们已经对Tomcat的整体架构有了大致的了解，从图A、B、C、D可以看出来每一个组件的基本要素和作用。我们在脑海里应该有一个大概的轮廓了！如果你面试的时候，让你简单的聊一下Tomcat，上面的内容你能脱口而出吗？当你能够脱口而出的时候，面试官一定会对你刮目相看的！
