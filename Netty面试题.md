@@ -1,3 +1,40 @@
+
+Table of Contents
+=================
+
+      * [1.Netty 是什么？](#1netty-是什么)
+      * [2.Netty 的特点是什么？](#2netty-的特点是什么)
+      * [3.Netty 的优势有哪些？](#3netty-的优势有哪些)
+      * [4.Netty 的应用场景有哪些？](#4netty-的应用场景有哪些)
+      * [5.Netty 高性能表现在哪些方面？](#5netty-高性能表现在哪些方面)
+      * [6.BIO、NIO和AIO的区别？](#6bionio和aio的区别)
+      * [7.NIO的组成？](#7nio的组成)
+      * [8.Netty的线程模型？](#8netty的线程模型)
+      * [9.TCP 粘包/拆包的原因及解决方法？](#9tcp-粘包拆包的原因及解决方法)
+      * [10.什么是 Netty 的零拷贝？](#10什么是-netty-的零拷贝)
+      * [11.Netty 中有哪种重要组件？](#11netty-中有哪种重要组件)
+      * [12.Netty 发送消息有几种方式？](#12netty-发送消息有几种方式)
+      * [13.默认情况 Netty 起多少线程？何时启动？](#13默认情况-netty-起多少线程何时启动)
+      * [14.了解哪几种序列化协议？](#14了解哪几种序列化协议)
+      * [15.如何选择序列化协议？](#15如何选择序列化协议)
+      * [16.Netty 支持哪些心跳类型设置？](#16netty-支持哪些心跳类型设置)
+      * [17.Netty 和 Tomcat 的区别？](#17netty-和-tomcat-的区别)
+      * [18.NIOEventLoopGroup源码？](#18nioeventloopgroup源码)
+      * [Netty简介](#netty简介)
+         * [JDK原生NIO程序的问题](#jdk原生nio程序的问题)
+         * [Netty的特点](#netty的特点)
+         * [Netty常见使用场景](#netty常见使用场景)
+      * [Netty高性能设计](#netty高性能设计)
+         * [<strong>I/O模型</strong>](#io模型)
+         * [线程模型](#线程模型)
+      * [Netty架构设计](#netty架构设计)
+         * [功能特性](#功能特性)
+         * [模块组件](#模块组件)
+         * [工作原理架构](#工作原理架构)
+      * [总结](#总结)
+
+***
+
 ## 1.Netty 是什么？
 
 Netty是 一个异步事件驱动的网络应用程序框架，用于快速开发可维护的高性能协议服务器和客户端。Netty是基于nio的，它封装了jdk的nio，让我们使用起来更加方法灵活。
@@ -7,6 +44,7 @@ Netty是 一个异步事件驱动的网络应用程序框架，用于快速开�
 * 高并发：Netty 是一款基于 NIO（Nonblocking IO，非阻塞IO）开发的网络通信框架，对比于 BIO（Blocking I/O，阻塞IO），他的并发性能得到了很大提高。
 * 传输快：Netty 的传输依赖于零拷贝特性，尽量减少不必要的内存拷贝，实现了更高效率的传输。
 * 封装好：Netty 封装了 NIO 操作的很多细节，提供了易于使用调用接口。
+
 ## 3.Netty 的优势有哪些？
 
 * 使用简单：封装了 NIO 的很多细节，使用更简单。
@@ -15,6 +53,7 @@ Netty是 一个异步事件驱动的网络应用程序框架，用于快速开�
 * 性能高：通过与其他业界主流的 NIO 框架对比，Netty 的综合性能最优。
 * 稳定：Netty 修复了已经发现的所有 NIO 的 bug，让开发人员可以专注于业务本身。
 * 社区活跃：Netty 是活跃的开源项目，版本迭代周期短，bug 修复速度快。
+
 ## 4.Netty 的应用场景有哪些？
 
 典型的应用有：阿里分布式服务框架 Dubbo，默认使用 Netty 作为基础通信组件，还有 RocketMQ 也是使用 Netty 作为通讯的基础。
@@ -26,6 +65,7 @@ Netty是 一个异步事件驱动的网络应用程序框架，用于快速开�
 * 内存池设计：申请的内存可以重用，主要指直接内存。内部实现是用一颗二叉查找树管理内存分配情况。
 * 串形化处理读写：避免使用锁带来的性能开销。
 * 高性能序列化协议：支持 protobuf 等高性能序列化协议。
+
 ## 6.BIO、NIO和AIO的区别？
 
 BIO：一个连接一个线程，客户端有连接请求时服务器端就需要启动一个线程进行处理。线程开销大。
@@ -108,6 +148,7 @@ Netty 的零拷贝主要包含三个方面：
 * Netty 的接收和发送 ByteBuffer 采用 DIRECT BUFFERS，使用堆外直接内存进行 Socket 读写，不需要进行字节缓冲区的二次拷贝。如果使用传统的堆内存（HEAP BUFFERS）进行 Socket 读写，JVM 会将堆内存 Buffer 拷贝一份到直接内存中，然后才写入 Socket 中。相比于堆外直接内存，消息在发送过程中多了一次缓冲区的内存拷贝。
 * Netty 提供了组合 Buffer 对象，可以聚合多个 ByteBuffer 对象，用户可以像操作一个 Buffer 那样方便的对组合 Buffer 进行操作，避免了传统通过内存拷贝的方式将几个小 Buffer 合并成一个大的 Buffer。
 * Netty 的文件传输采用了 transferTo 方法，它可以直接将文件缓冲区的数据发送到目标 Channel，避免了传统通过循环 write 方式导致的内存拷贝问题。
+
 ## 11.Netty 中有哪种重要组件？
 
 * Channel：Netty 网络操作抽象类，它除了包括基本的 I/O 操作，如 bind、connect、read、write 等。
@@ -115,12 +156,14 @@ Netty 的零拷贝主要包含三个方面：
 * ChannelFuture：Netty 框架中所有的 I/O 操作都为异步的，因此我们需要 ChannelFuture 的 addListener()注册一个 ChannelFutureListener 监听事件，当操作执行成功或者失败时，监听就会自动触发返回结果。
 * ChannelHandler：充当了所有处理入站和出站数据的逻辑容器。ChannelHandler 主要用来处理各种事件，这里的事件很广泛，比如可以是连接、数据接收、异常、数据转换等。
 * ChannelPipeline：为 ChannelHandler 链提供了容器，当 channel 创建时，就会被自动分配到它专属的 ChannelPipeline，这个关联是永久性的。
+
 ## 12.Netty 发送消息有几种方式？
 
 Netty 有两种发送消息的方式：
 
 * 直接写入 Channel 中，消息从 ChannelPipeline 当中尾部开始移动；
 * 写入和 ChannelHandler 绑定的 ChannelHandlerContext 中，消息从 ChannelPipeline 中的下一个 ChannelHandler 中移动。
+
 ## 13.默认情况 Netty 起多少线程？何时启动？
 
 Netty 默认是 CPU 处理器数的两倍，bind 完之后启动。
@@ -194,10 +237,12 @@ Netty中的使用：ProtobufVarint32FrameDecoder 是用于处理半包消息的�
 * readerIdleTime：为读超时时间（即测试端一定时间内未接受到被测试端消息）。
 * writerIdleTime：为写超时时间（即测试端一定时间内向被测试端发送消息）。
 * allIdleTime：所有类型的超时时间。
+
 ## 17.Netty 和 Tomcat 的区别？
 
 * 作用不同：Tomcat 是 Servlet 容器，可以视为 Web 服务器，而 Netty 是异步事件驱动的网络应用程序框架和工具用于简化网络编程，例如TCP和UDP套接字服务器。
 * 协议不同：Tomcat 是基于 http 协议的 Web 服务器，而 Netty 能通过编程自定义各种协议，因为 Netty 本身自己能编码/解码字节流，所有 Netty 可以实现，HTTP 服务器、FTP 服务器、UDP 服务器、RPC 服务器、WebSocket 服务器、Redis 的 Proxy 服务器、MySQL 的 Proxy 服务器等等。
+
 ## 18.NIOEventLoopGroup源码？
 
 NioEventLoopGroup(其实是MultithreadEventExecutorGroup) 内部维护一个类型为 EventExecutor children [], 默认大小是处理器核数 * 2, 这样就构成了一个线程池，初始化EventExecutor时NioEventLoopGroup重载newChild方法，所以children元素的实际类型为NioEventLoop。
@@ -232,6 +277,7 @@ JDK原生也有一套网络应用程序API，但是存在一系列问题，主�
 * 需要具备其它的额外技能做铺垫，例如熟悉Java多线程编程，因为NIO编程涉及到Reactor模式，你必须对多线程和网路编程非常熟悉，才能编写出高质量的NIO程序
 * 可靠性能力补齐，开发工作量和难度都非常大。例如客户端面临断连重连、网络闪断、半包读写、失败缓存、网络拥塞和异常码流的处理等等，NIO编程的特点是功能开发相对容易，但是可靠性能力补齐工作量和难度都非常大
 * JDK NIO的BUG，例如臭名昭著的epoll bug，它会导致Selector空轮询，最终导致CPU 100%。官方声称在JDK1.6版本的update18修复了该问题，但是直到JDK1.7版本该问题仍旧存在，只不过该bug发生概率降低了一些而已，它并没有被根本解决
+
 ### Netty的特点
 
 * Netty的对JDK自带的NIO的API进行封装，解决上述问题，主要特点有：
@@ -240,6 +286,7 @@ JDK原生也有一套网络应用程序API，但是存在一系列问题，主�
 * 高性能 吞吐量更高，延迟更低 减少资源消耗 最小化不必要的内存复制
 * 安全 完整的SSL / TLS和StartTLS支持
 * 社区活跃，不断更新 社区活跃，版本迭代周期短，发现的BUG可以被及时修复，同时，更多的新功能会被加入
+
 ### Netty常见使用场景
 
 Netty常见的使用场景如下：
@@ -247,6 +294,7 @@ Netty常见的使用场景如下：
 * 互联网行业 在分布式系统中，各个节点之间需要远程服务调用，高性能的RPC框架必不可少，Netty作为异步高新能的通信框架,往往作为基础通信组件被这些RPC框架使用。 典型的应用有：阿里分布式服务框架Dubbo的RPC框架使用Dubbo协议进行节点间通信，Dubbo协议默认使用Netty作为基础通信组件，用于实现各进程节点之间的内部通信。
 * 游戏行业 无论是手游服务端还是大型的网络游戏，Java语言得到了越来越广泛的应用。Netty作为高性能的基础通信组件，它本身提供了TCP/UDP和HTTP协议栈。 非常方便定制和开发私有协议栈，账号登录服务器，地图服务器之间可以方便的通过Netty进行高性能的通信
 * 大数据领域 经典的Hadoop的高性能通信和序列化组件Avro的RPC框架，默认采用Netty进行跨界点通信，它的Netty Service基于Netty框架二次封装实现
+
 ## Netty高性能设计
 
 Netty作为异步事件驱动的网络，高性能之处主要来自于其I/O模型和线程处理模型，前者决定如何收发数据，后者决定如何处理数据
@@ -393,6 +441,7 @@ serverBootstrap.bind(port).addListener(future -> {
 }
 ```
 相比传统阻塞I/O，执行I/O操作后线程会被阻塞住, 直到操作完成；异步处理的好处是不会造成线程阻塞，线程在I/O操作期间可以执行别的程序，在高并发情形下会更稳定和更高的吞吐量。
+
 ## Netty架构设计
 
 前面介绍完Netty相关一些理论介绍，下面从功能特性、模块组件、运作过程来介绍Netty的架构设计
@@ -405,6 +454,7 @@ serverBootstrap.bind(port).addListener(future -> {
 * 容器集成 支持OSGI、JBossMC、Spring、Guice容器
 * 协议支持 HTTP、Protobuf、二进制、文本、WebSocket等一系列常见协议都支持。 还支持通过实行编码解码逻辑来实现自定义协议
 * Core核心 可扩展事件模型、通用通信API、支持零拷贝的ByteBuf缓冲对象
+
 ### 模块组件
 
 **Bootstrap、ServerBootstrap**
@@ -573,9 +623,9 @@ ctx.channel().eventLoop().schedule(new Runnable() {
 }
 , 60, TimeUnit.SECONDS);
 ```
+
 ## 总结
 
 现在稳定推荐使用的主流版本还是Netty4，Netty5 中使用了 ForkJoinPool，增加了代码的复杂度，但是对性能的改善却不明显，所以这个版本不推荐使用，官网也没有提供下载链接。
 
 Netty 入门门槛相对较高，其实是因为这方面的资料较少，并不是因为他有多难，大家其实都可以像搞透 Spring 一样搞透 Netty。在学习之前，建议先理解透整个框架原理结构，运行过程，可以少走很多弯路
-
