@@ -1,10 +1,99 @@
-# 一、Spring概述
+
+Table of Contents
+=================
+
+   * [一.Spring概述](#一spring概述)
+      * [1.什么是spring?](#1什么是spring)
+      * [2.Spring框架的设计目标，设计理念，和核心是什么](#2spring框架的设计目标设计理念和核心是什么)
+      * [3.Spring的优缺点是什么？](#3spring的优缺点是什么)
+      * [4.Spring有哪些应用场景](#4spring有哪些应用场景)
+      * [5.Spring由哪些模块组成？](#5spring由哪些模块组成)
+      * [6.Spring 框架中都用到了哪些设计模式？](#6spring-框架中都用到了哪些设计模式)
+      * [7.详细讲解一下核心容器（spring context应用上下文) 模块](#7详细讲解一下核心容器spring-context应用上下文-模块)
+      * [8.Spring框架中有哪些不同类型的事件](#8spring框架中有哪些不同类型的事件)
+      * [9.Spring 应用程序有哪些不同组件？](#9spring-应用程序有哪些不同组件)
+      * [10.使用 Spring 有哪些方式？](#10使用-spring-有哪些方式)
+   * [二.Spring控制反转(IOC)](#二spring控制反转ioc)
+      * [1.什么是Spring IOC 容器？](#1什么是spring-ioc-容器)
+      * [2.控制反转(IoC)有什么作用](#2控制反转ioc有什么作用)
+      * [3.IOC的优点是什么？](#3ioc的优点是什么)
+      * [4.Spring IoC 的实现机制](#4spring-ioc-的实现机制)
+      * [5.Spring 的 IoC支持哪些功能](#5spring-的-ioc支持哪些功能)
+      * [6.BeanFactory 和 ApplicationContext有什么区别？](#6beanfactory-和-applicationcontext有什么区别)
+      * [7.Spring 如何设计容器的，BeanFactory和ApplicationContext的关系详解](#7spring-如何设计容器的beanfactory和applicationcontext的关系详解)
+      * [8.ApplicationContext通常的实现是什么？](#8applicationcontext通常的实现是什么)
+      * [9.什么是Spring的依赖注入？](#9什么是spring的依赖注入)
+      * [10.依赖注入的基本原则](#10依赖注入的基本原则)
+      * [11.依赖注入有什么优势](#11依赖注入有什么优势)
+      * [12.有哪些不同类型的依赖注入实现方式？](#12有哪些不同类型的依赖注入实现方式)
+      * [13.构造器依赖注入和 Setter方法注入的区别](#13构造器依赖注入和-setter方法注入的区别)
+   * [三.Spring Beans](#三spring-beans)
+      * [1.什么是Spring beans？](#1什么是spring-beans)
+      * [2.一个 Spring Bean 定义 包含什么？](#2一个-spring-bean-定义-包含什么)
+      * [3.如何给Spring 容器提供配置元数据？Spring有几种配置方式](#3如何给spring-容器提供配置元数据spring有几种配置方式)
+      * [4.Spring配置文件包含了哪些信息](#4spring配置文件包含了哪些信息)
+      * [5.Spring基于xml注入bean的几种方式](#5spring基于xml注入bean的几种方式)
+      * [6.你怎样定义类的作用域？](#6你怎样定义类的作用域)
+      * [7.解释Spring支持的几种bean的作用域](#7解释spring支持的几种bean的作用域)
+      * [8.Spring框架中的单例bean是线程安全的吗？](#8spring框架中的单例bean是线程安全的吗)
+      * [9.Spring如何处理线程并发问题？](#9spring如何处理线程并发问题)
+      * [10.解释Spring框架中bean的生命周期](#10解释spring框架中bean的生命周期)
+      * [11.哪些是重要的bean生命周期方法？ 你能重载它们吗？](#11哪些是重要的bean生命周期方法-你能重载它们吗)
+      * [12.什么是Spring的内部bean？什么是Spring inner beans？](#12什么是spring的内部bean什么是spring-inner-beans)
+      * [13.在 Spring中如何注入一个java集合？](#13在-spring中如何注入一个java集合)
+      * [14.什么是bean装配？](#14什么是bean装配)
+      * [15.解释不同方式的自动装配，spring 自动装配 bean 有哪些方式？](#15解释不同方式的自动装配spring-自动装配-bean-有哪些方式)
+      * [16.使用@Autowired注解自动装配的过程是怎样的？](#16使用autowired注解自动装配的过程是怎样的)
+      * [17.自动装配有哪些局限性？](#17自动装配有哪些局限性)
+      * [18.你可以在Spring中注入一个null 和一个空字符串吗？](#18你可以在spring中注入一个null-和一个空字符串吗)
+   * [四.Spring注解](#四spring注解)
+      * [1.什么是基于Java的Spring注解配置? 给一些注解的例子](#1什么是基于java的spring注解配置-给一些注解的例子)
+      * [2.怎样开启注解装配？](#2怎样开启注解装配)
+      * [3.@Component, @Controller, @Repository, @Service 有何区别？](#3component-controller-repository-service-有何区别)
+      * [4.@Required 注解有什么作用](#4required-注解有什么作用)
+      * [5.@Autowired 注解有什么作用](#5autowired-注解有什么作用)
+      * [6.@Autowired和@Resource之间的区别](#6autowired和resource之间的区别)
+      * [7.@Qualifier 注解有什么作用](#7qualifier-注解有什么作用)
+      * [8.@RequestMapping 注解有什么用？](#8requestmapping-注解有什么用)
+   * [五.Spring数据访问](#五spring数据访问)
+      * [1.解释对象/关系映射集成模块](#1解释对象关系映射集成模块)
+      * [2.在Spring框架中如何更有效地使用JDBC？](#2在spring框架中如何更有效地使用jdbc)
+      * [3.解释JDBC抽象和DAO模块](#3解释jdbc抽象和dao模块)
+      * [4.spring DAO 有什么用？](#4spring-dao-有什么用)
+      * [5.spring JDBC API 中存在哪些类？](#5spring-jdbc-api-中存在哪些类)
+      * [6.JdbcTemplate是什么](#6jdbctemplate是什么)
+      * [7.使用Spring通过什么方式访问Hibernate？使用 Spring 访问 Hibernate 的方法有哪些？](#7使用spring通过什么方式访问hibernate使用-spring-访问-hibernate-的方法有哪些)
+      * [8.如何通过HibernateDaoSupport将Spring和Hibernate结合起来？](#8如何通过hibernatedaosupport将spring和hibernate结合起来)
+      * [9.Spring支持的事务管理类型， spring 事务实现方式有哪些？](#9spring支持的事务管理类型-spring-事务实现方式有哪些)
+      * [10.Spring事务的实现方式和实现原理](#10spring事务的实现方式和实现原理)
+      * [11.说一下Spring的事务传播行为](#11说一下spring的事务传播行为)
+      * [12.说一下 spring 的事务隔离？](#12说一下-spring-的事务隔离)
+      * [13.Spring框架的事务管理有哪些优点？](#13spring框架的事务管理有哪些优点)
+      * [14.你更倾向用那种事务管理类型？](#14你更倾向用那种事务管理类型)
+   * [六.Spring面向切面编程(AOP)](#六spring面向切面编程aop)
+      * [1.什么是AOP](#1什么是aop)
+      * [2.Spring AOP and AspectJ AOP 有什么区别？AOP 有哪些实现方式？](#2spring-aop-and-aspectj-aop-有什么区别aop-有哪些实现方式)
+      * [3.JDK动态代理和CGLIB动态代理的区别](#3jdk动态代理和cglib动态代理的区别)
+      * [4.如何理解 Spring 中的代理？](#4如何理解-spring-中的代理)
+      * [5.解释一下Spring AOP里面的几个名词](#5解释一下spring-aop里面的几个名词)
+      * [6.Spring在运行时通知对象](#6spring在运行时通知对象)
+      * [7.Spring只支持方法级别的连接点](#7spring只支持方法级别的连接点)
+      * [8.在Spring AOP 中，关注点和横切关注的区别是什么？在 spring aop 中 concern 和 cross-cutting concern 的不同之处](#8在spring-aop-中关注点和横切关注的区别是什么在-spring-aop-中-concern-和-cross-cutting-concern-的不同之处)
+      * [9.Spring通知有哪些类型？](#9spring通知有哪些类型)
+      * [10.什么是切面 Aspect？](#10什么是切面-aspect)
+      * [11.解释基于XML Schema方式的切面实现](#11解释基于xml-schema方式的切面实现)
+      * [12.解释基于注解的切面实现](#12解释基于注解的切面实现)
+      * [13.有几种不同类型的自动代理？](#13有几种不同类型的自动代理)
+
+***
+
+# 一.Spring概述
 
 ## 1.什么是spring?
 
 Spring是一个轻量级Java开发框架，最早有Rod Johnson创建，目的是为了解决企业级应用开发的业务逻辑层和其他各层的耦合问题。它是一个分层的JavaSE/JavaEE full-stack（一站式）轻量级开源框架，为开发Java应用程序提供全面的基础架构支持。Spring负责基础架构，因此Java开发者可以专注于应用程序的开发。
 
-Spring最根本的使命是**解决企业级应用开发的复杂性，即简化Java开发。**
+Spring最根本的使命是**解决企业级应用开发的复杂性，即简化Java开发**。
 
 Spring可以做很多事情，它为企业级开发提供给了丰富的功能，但是这些功能的底层都依赖于它的两个核心特性，也就是依赖注入（dependency injection，DI）和面向切面编程（aspect-oriented programming，AOP）。
 
@@ -14,6 +103,7 @@ Spring可以做很多事情，它为企业级开发提供给了丰富的功能�
 * 通过依赖注入和面向接口实现松耦合；
 * 基于切面和惯例进行声明式编程；
 * 通过切面和模板减少样板式代码。
+
 ## 2.Spring框架的设计目标，设计理念，和核心是什么
 
 **Spring设计目标**：Spring为开发者提供一个一站式轻量级应用开发平台；
@@ -40,15 +130,17 @@ IoC让相互协作的组件保持松散的耦合，而AOP编程允许你把遍�
 * Spring明明一个很轻量级的框架，却给人感觉大而全
 * Spring依赖反射，反射影响性能
 * 使用门槛升高，入门Spring需要较长时间
+
 ## 4.Spring有哪些应用场景
 
-**应用场景：**JavaEE企业应用开发，包括SSH、SSM等
+**应用场景**：JavaEE企业应用开发，包括SSH、SSM等
 
-**Spring价值：**
+**Spring价值**：
 
 * Spring是非侵入式的框架，目标是使应用程序代码对框架依赖最小化；
 * Spring提供一个一致的编程模型，使应用直接使用POJO开发，与运行环境隔离开来；
 * Spring推动应用设计风格向面向对象和面向接口开发转变，提高了代码的重用性和可测试性；
+
 ## 5.Spring由哪些模块组成？
 
 Spring 总共大约有 20 个模块， 由 1300 多个不同的文件构成。 而这些组件被分别整合在核心容器（Core Container） 、 AOP（Aspect Oriented Programming）和设备支持（Instrmentation） 、数据访问与集成（Data Access/Integeration） 、 Web、 消息（Messaging） 、 Test等 6 个模块中。 以下是 Spring 5 的模块结构图：
@@ -62,6 +154,7 @@ Spring 总共大约有 20 个模块， 由 1300 多个不同的文件构成。 �
 * spring aop：提供了面向切面的编程实现，让你可以自定义拦截器、切点等。
 * spring Web：提供了针对 Web 开发的集成特性，例如文件上传，利用 servlet listeners 进行 ioc 容器初始化和针对 Web 的 ApplicationContext。
 * spring test：主要为测试提供支持的，支持使用JUnit或TestNG对Spring组件进行单元测试和集成测试。
+
 ## 6.Spring 框架中都用到了哪些设计模式？
 
 1. 工厂模式：BeanFactory就是简单工厂模式的体现，用来创建对象的实例；
@@ -69,6 +162,7 @@ Spring 总共大约有 20 个模块， 由 1300 多个不同的文件构成。 �
 3. 代理模式：Spring的AOP功能用到了JDK的动态代理和CGLIB字节码生成技术；
 4. 模板方法：用来解决代码重复的问题。比如. RestTemplate, JmsTemplate, JpaTemplate。
 5. 观察者模式：定义对象键一种一对多的依赖关系，当一个对象的状态发生改变时，所有依赖于它的对象都会得到通知被制动更新，如Spring中listener的实现–ApplicationListener。
+
 ## 7.详细讲解一下核心容器（spring context应用上下文) 模块
 
 这是基本的Spring模块，提供spring 框架的基础功能，BeanFactory 是 任何以spring为基础的应用的核心。Spring 框架建立在此模块之上，它使Spring成为一个容器。
@@ -84,6 +178,7 @@ Spring 提供了以下5种标准的事件：
 3. 上下文停止事件（ContextStoppedEvent）：当容器调用ConfigurableApplicationContext的Stop()方法停止容器时触发该事件。
 4. 上下文关闭事件（ContextClosedEvent）：当ApplicationContext被关闭时触发该事件。容器被关闭时，其管理的所有单例Bean都被销毁。
 5. 请求处理事件（RequestHandledEvent）：在Web应用中，当一个http请求（request）结束触发该事件。如果一个bean实现了ApplicationListener接口，当一个ApplicationEvent 被发布以后，bean会自动被通知。
+
 ## 9.Spring 应用程序有哪些不同组件？
 
 Spring 应用一般有以下组件：
@@ -93,6 +188,7 @@ Spring 应用一般有以下组件：
 * Bean 配置文件 - 包含类的信息以及如何配置它们。
 * Spring 面向切面编程（AOP） - 提供面向切面编程的功能。
 * 用户程序 - 它使用接口。
+
 ## 10.使用 Spring 有哪些方式？
 
 使用 Spring 有以下方式：
@@ -101,7 +197,8 @@ Spring 应用一般有以下组件：
 * 作为第三方 Web 框架，使用 Spring Frameworks 中间层。
 * 作为企业级 Java Bean，它可以包装现有的 POJO（Plain Old Java Objects）。
 * 用于远程使用。
-# 二、Spring控制反转(IOC)
+
+# 二.Spring控制反转(IOC)
 
 ## 1.什么是Spring IOC 容器？
 
@@ -114,12 +211,14 @@ Spring IOC 负责创建对象，管理对象（通过依赖注入（DI），装�
 * 管理对象的创建和依赖关系的维护。对象的创建并不是一件简单的事，在对象关系比较复杂时，如果依赖关系需要程序猿来维护的话，那是相当头疼的
 * 解耦，由容器去维护具体的对象
 * 托管了类的产生过程，比如我们需要在类的产生过程中做一些处理，最直接的例子就是代理，如果有容器程序可以把这部分处理交给容器，应用程序则无需去关心类是如何完成代理的
+
 ## 3.IOC的优点是什么？
 
 * IOC 或 依赖注入把应用的代码量降到最低。
 * 它使应用容易测试，单元测试不再需要单例和JNDI查找机制。
 * 最小的代价和最小的侵入性使松散耦合得以实现。
 * IOC容器支持加载服务时的饿汉式初始化和懒加载。
+
 ## 4.Spring IoC 的实现机制
 
 Spring 中的 IoC 的实现原理就是工厂模式加反射机制。
@@ -160,6 +259,7 @@ class Client {
     }
 }
 ```
+
 ## 5.Spring 的 IoC支持哪些功能
 
 Spring 的 IoC 设计支持以下功能：
@@ -203,7 +303,7 @@ ApplicationContext，它是在容器启动时，一次性创建了所有的Bean�
 
 BeanFactory通常以编程的方式被创建，ApplicationContext还能以声明的方式创建，如使用ContextLoader。
 
-**注册**方式
+**注册方式**
 
 BeanFactory和ApplicationContext都支持BeanPostProcessor、BeanFactoryPostProcessor的使用，但两者之间的区别是：BeanFactory需要手动注册，而ApplicationContext则是自动注册。
 
@@ -272,6 +372,7 @@ BeanFactory和ApplicationContext的关系
 * 查找定位操作与应用代码完全无关。
 * 不依赖于容器的API，可以很容易地在任何容器以外使用应用对象。
 * 不需要特殊的接口，绝大多数对象可以做到完全不必依赖容器。
+
 ## 12.有哪些不同类型的依赖注入实现方式？
 
 依赖注入是时下最流行的IoC实现方式，依赖注入分为接口注入（Interface Injection），Setter方法注入（Setter Injection）和构造器注入（Constructor Injection）三种方式。其中接口注入由于在灵活性和易用性比较差，现在从Spring4开始已被废弃。
@@ -291,7 +392,7 @@ BeanFactory和ApplicationContext的关系
 
 两种依赖方式都可以使用，构造器注入和Setter方法注入。最好的解决方案是用构造器参数实现强制依赖，setter方法实现可选依赖。
 
-# 三、Spring Beans
+# 三.Spring Beans
 
 ## 1.什么是Spring beans？
 
@@ -308,6 +409,7 @@ Spring beans 是那些形成Spring应用的主干的java对象。它们被Spring
 * XML配置文件。
 * 基于注解的配置。
 * 基于java的配置。
+
 ## 4.Spring配置文件包含了哪些信息
 
 Spring配置文件是个XML 文件，这个文件包含了类信息，描述了如何配置它们，以及如何相互调用。
@@ -320,6 +422,7 @@ Spring配置文件是个XML 文件，这个文件包含了类信息，描述了�
   * 通过type设置参数类型；
 * 静态工厂注入；
 * 实例工厂；
+
 ## 6.你怎样定义类的作用域？
 
 当定义一个 在Spring里，我们还能给这个bean声明一个作用域。它可以通过bean 定义中的scope属性来定义。如，当Spring要在需要的时候每次生产一个新的bean实例，bean的scope属性被指定为prototype。另一方面，一个bean每次使用的时候必须返回同一个实例，这个bean的scope 属性 必须设为 singleton。
@@ -346,6 +449,7 @@ spring 中的 bean 默认是单例模式，spring 框架并没有对单例 bean 
 
 * 有状态就是有数据存储功能。
 * 无状态就是不会保存数据。
+
 ## 9.Spring如何处理线程并发问题？
 
 在一般情况下，只有无状态的Bean才可以在多线程环境下共享，在Spring中，绝大部分Bean都可以声明为singleton作用域，因为Spring对一些Bean中非线程安全状态采用ThreadLocal进行处理，解决线程安全问题。
@@ -406,6 +510,7 @@ Spring提供以下几种集合的配置元素：
 * 类型用于注入一组值，不允许有相同的值。
 * 类型用于注入一组键值对，键和值都可以为任意类型。
 * 类型用于注入一组键值对，键和值都只能为String类型。
+
 ## 14.什么是bean装配？
 
 装配，或bean 装配是指在Spring 容器中把bean组装到一起，前提是容器需要知道bean的依赖关系，如何通过依赖注入来把它们装配到一起。
@@ -425,6 +530,7 @@ Spring提供以下几种集合的配置元素：
 * byType：通过参数的数据类型进行自动装配。
 * constructor：利用构造函数进行装配，并且构造函数的参数通过byType进行装配。
 * autodetect：自动探测，如果有构造方法，通过 construct的方式自动装配，否则使用 byType的方式自动装配。
+
 ## 16.使用@Autowired注解自动装配的过程是怎样的？
 
 使用@Autowired注解来自动装配指定的bean。在使用@Autowired注解之前需要在Spring配置文件进行配置，<context:annotation-config />。
@@ -434,6 +540,7 @@ Spring提供以下几种集合的配置元素：
 * 如果查询结果刚好为一个，就将该bean装配给@Autowired指定的数据；
 * 如果查询的结果不止一个，那么@Autowired会根据名称来查找；
 * 如果上述查找的结果为空，那么会抛出异常。解决方法时，使用required=false。
+
 ## 17.自动装配有哪些局限性？
 
 自动装配的局限性是：
@@ -441,11 +548,12 @@ Spring提供以下几种集合的配置元素：
 * 重写：你仍需用 和 配置来定义依赖，意味着总要重写自动装配。
 * 基本数据类型：你不能自动装配简单的属性，如基本数据类型，String字符串，和类。
 * 模糊特性：自动装配不如显式装配精确，如果有可能，建议使用显式装配。
+
 ## 18.你可以在Spring中注入一个null 和一个空字符串吗？
 
 可以。
 
-# 四、Spring注解
+# 四.Spring注解
 
 ## 1.什么是基于Java的Spring注解配置? 给一些注解的例子
 
@@ -464,6 +572,7 @@ public class StudentConfig {
     }
 }
 ```
+
 ## 2.怎样开启注解装配？
 
 注解装配在默认情况下是不开启的，为了使用注解装配，我们必须在Spring配置文件中配置 <context:annotation-config/>元素。
@@ -474,6 +583,7 @@ public class StudentConfig {
 * @Controller：这将一个类标记为 Spring Web MVC 控制器。标有它的 Bean 会自动导入到 IoC 容器中。
 * @Service：此注解是组件注解的特化。它不会对 @Component 注解提供任何其他行为。您可以在服务层类中使用 @Service 而不是 @Component，因为它以更好的方式指定了意图。
 * @Repository：这个注解是具有类似用途和功能的 @Component 注解的特化。它为 DAO 提供了额外的好处。它将 DAO 导入 IoC 容器，并使未经检查的异常有资格转换为 Spring DataAccessException。
+
 ## 4.@Required 注解有什么作用
 
 这个注解表明bean的属性必须在配置的时候设置，通过一个bean定义的显式的属性值或通过自动装配，若@Required注解的bean属性未被设置，容器将抛出BeanInitializationException。示例：
@@ -490,6 +600,7 @@ public class Employee {
     }
 }
 ```
+
 ## 5.@Autowired 注解有什么作用
 
 @Autowired默认是按照类型装配注入的，默认情况下它要求依赖对象必须存在（可以设置它required属性为false）。@Autowired 注解提供了更细粒度的控制，包括在何处以及如何完成自动装配。它的用法和@Required一样，修饰setter方法、构造器、属性或者具有任意名称和/或多个参数的PN方法。
@@ -506,6 +617,7 @@ public class Employee {
     }
 }
 ```
+
 ## 6.@Autowired和@Resource之间的区别
 
 @Autowired可用于：构造函数、成员变量、Setter方法
@@ -514,6 +626,7 @@ public class Employee {
 
 * @Autowired默认是按照类型装配注入的，默认情况下它要求依赖对象必须存在（可以设置它required属性为false）。
 * @Resource默认是按照名称来装配注入的，只有当找不到与名称匹配的bean才会按照类型来装配注入。
+
 ## 7.@Qualifier 注解有什么作用
 
 当您创建多个相同类型的 bean 并希望仅使用属性装配其中一个 bean 时，您可以使用@Qualifier 注解和 @Autowired 通过指定应该装配哪个确切的 bean 来消除歧义。
@@ -524,7 +637,8 @@ public class Employee {
 
 * 类级别：映射请求的 URL
 * 方法级别：映射 URL 以及 HTTP 请求方法
-# 五、Spring数据访问
+
+# 五.Spring数据访问
 
 ## 1.解释对象/关系映射集成模块
 
@@ -549,6 +663,7 @@ Spring DAO（数据访问对象） 使得 JDBC，Hibernate 或 JDO 这样的数�
 * NamedParameterJdbcTemplate
 * SimpleJdbcInsert
 * SimpleJdbcCall
+
 ## 6.JdbcTemplate是什么
 
 JdbcTemplate 类提供了很多便利的方法解决诸如把数据库数据转变成基本数据类型或对象，执行写好的或可调用的数据库操作语句，提供自定义的数据错误处理。
@@ -568,6 +683,7 @@ JdbcTemplate 类提供了很多便利的方法解决诸如把数据库数据转�
 * 配置the Hibernate SessionFactory
 * 继承HibernateDaoSupport实现一个DAO
 * 在AOP支持的事务中装配
+
 ## 9.Spring支持的事务管理类型， spring 事务实现方式有哪些？
 
 Spring支持两种类型的事务管理：
@@ -591,6 +707,7 @@ spring事务的传播行为说的是，当多个事务同时存在的时候，sp
 >⑤ PROPAGATION_NOT_SUPPORTED：以非事务方式执行操作，如果当前存在事务，就把当前事务挂起。
 >⑥ PROPAGATION_NEVER：以非事务方式执行，如果当前存在事务，则抛出异常。
 >⑦ PROPAGATION_NESTED：如果当前存在事务，则在嵌套事务内执行。如果当前没有事务，则按REQUIRED属性执行。
+
 ## 12.说一下 spring 的事务隔离？
 
 spring 有五大隔离级别，默认值为 ISOLATION_DEFAULT（使用数据库的设置），其他四个隔离级别和数据库的隔离级别一致：
@@ -621,7 +738,7 @@ spring 有五大隔离级别，默认值为 ISOLATION_DEFAULT（使用数据库�
 
 大多数Spring框架的用户选择声明式事务管理，因为它对应用代码的影响最小，因此更符合一个无侵入的轻量级容器的思想。声明式事务管理要优于编程式事务管理，虽然比编程式事务管理（这种方式允许你通过代码控制事务）少了一点灵活性。唯一不足地方是，最细粒度只能作用到方法级别，无法做到像编程式事务那样可以作用到代码块级别。
 
-# 六、Spring面向切面编程(AOP)
+# 六.Spring面向切面编程(AOP)
 
 ## 1.什么是AOP
 
@@ -635,6 +752,7 @@ AOP实现的关键在于 代理模式，AOP代理主要分为静态代理和动�
 
 * （1）AspectJ是静态代理的增强，所谓静态代理，就是AOP框架会在编译阶段生成AOP代理类，因此也称为编译时增强，他会在编译阶段将AspectJ(切面)织入到Java字节码中，运行的时候就是增强之后的AOP对象。
 * （2）Spring AOP使用的动态代理，所谓的动态代理就是说AOP框架不会去修改字节码，而是每次运行时在内存中临时为方法生成一个AOP对象，这个AOP对象包含了目标对象的全部方法，并且在特定的切点做了增强处理，并回调原对象的方法。
+
 ## 3.JDK动态代理和CGLIB动态代理的区别
 
 Spring AOP中的动态代理主要有两种方式，JDK动态代理和CGLIB动态代理：
@@ -646,6 +764,7 @@ JDK动态代理只提供接口的代理，不支持类的代理。核心Invocati
 静态代理与动态代理区别在于生成AOP代理对象的时机不同，相对来说AspectJ的静态代理方式具有更好的性能，但是AspectJ需要特定的编译器进行处理，而Spring AOP则无需特定的编译器处理。
 
 >InvocationHandler 的 invoke(Object proxy,Method method,Object[] args)：proxy是最终生成的代理实例; method 是被代理目标实例的某个具体方法; args 是被代理目标实例某个方法的具体入参, 在方法反射调用时使用。
+
 ## 4.如何理解 Spring 中的代理？
 
 将 Advice 应用于目标对象后创建的对象称为代理。在客户端对象的情况下，目标对象和代理对象是相同的。
@@ -664,6 +783,7 @@ Advice + Target Object = Proxy
 * 编译期：切面在目标类编译时被织入。AspectJ的织入编译器是以这种方式织入切面的。
 * 类加载期：切面在目标类加载到JVM时被织入。需要特殊的类加载器，它可以在目标类被引入应用之前增强该目标类的字节码。AspectJ5的加载时织入就支持以这种方式织入切面。
 * 运行期：切面在应用运行的某个时刻被织入。一般情况下，在织入切面时，AOP容器会为目标对象动态地创建一个代理对象。SpringAOP就是以这种方式织入切面。
+
 ## 6.Spring在运行时通知对象
 
 通过在代理类中包裹切面，Spring在运行期把切面织入到Spring管理的bean中。代理封装了目标类，并拦截被通知方法的调用，再把调用转发给真正的目标bean。当代理拦截到方法调用时，在调用目标bean方法之前，会执行切面逻辑。
@@ -707,6 +827,7 @@ Spring切面可以应用5种类型的通知：
 >after advice
 >afterThrowing:异常发生
 >java.lang.RuntimeException: 异常发生
+
 ## 10.什么是切面 Aspect？
 
 aspect 由 pointcount 和 advice 组成，切面是通知和切点的结合。 它既包含了横切逻辑的定义, 也包括了连接点的定义. Spring AOP 就是负责实施切面的框架, 它将切面所定义的横切逻辑编织到切面所指定的连接点中.
