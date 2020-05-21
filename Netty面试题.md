@@ -1,5 +1,4 @@
 
-
 Table of Contents
 =================
 
@@ -22,18 +21,18 @@ Table of Contents
       * [16.Netty 支持哪些心跳类型设置？](#16netty-支持哪些心跳类型设置)
       * [17.Netty 和 Tomcat 的区别？](#17netty-和-tomcat-的区别)
       * [18.NIOEventLoopGroup源码？](#18nioeventloopgroup源码)
-      * [Netty简介](#netty简介)
-         * [JDK原生NIO程序的问题](#jdk原生nio程序的问题)
-         * [Netty的特点](#netty的特点)
-         * [Netty常见使用场景](#netty常见使用场景)
-      * [Netty高性能设计](#netty高性能设计)
-         * [<strong>I/O模型</strong>](#io模型)
-         * [线程模型](#线程模型)
-      * [Netty架构设计](#netty架构设计)
-         * [功能特性](#功能特性)
-         * [模块组件](#模块组件)
-         * [工作原理架构](#工作原理架构)
-      * [总结](#总结)
+   * [Netty简介](#netty简介)
+      * [JDK原生NIO程序的问题](#jdk原生nio程序的问题)
+      * [Netty的特点](#netty的特点)
+      * [Netty常见使用场景](#netty常见使用场景)
+   * [Netty高性能设计](#netty高性能设计)
+      * [<strong>I/O模型</strong>](#io模型)
+      * [线程模型](#线程模型)
+   * [Netty架构设计](#netty架构设计)
+      * [功能特性](#功能特性)
+      * [模块组件](#模块组件)
+      * [工作原理架构](#工作原理架构)
+   * [总结](#总结)
 
 ***
 
@@ -269,11 +268,11 @@ Outbound 事件都是请求事件, 发起者是 Channel，处理者是 unsafe，
 
 ByteBuf的特点：支持自动扩容（4M），保证put方法不会抛出异常、通过内置的复合缓冲类型，实现零拷贝（zero-copy）；不需要调用flip()来切换读/写模式，读取和写入索引分开；方法链；引用计数基于AtomicIntegerFieldUpdater用于内存回收；PooledByteBuf采用二叉树来实现一个内存池，集中管理内存的分配和释放，不用每次使用都新建一个缓冲区对象。UnpooledHeapByteBuf每次都会新建一个缓冲区对象。
 
-## Netty简介
+# Netty简介
 
 Netty是 一个异步事件驱动的网络应用程序框架，用于快速开发可维护的高性能协议服务器和客户端。
 
-### JDK原生NIO程序的问题
+## JDK原生NIO程序的问题
 
 JDK原生也有一套网络应用程序API，但是存在一系列问题，主要如下：
 
@@ -282,7 +281,7 @@ JDK原生也有一套网络应用程序API，但是存在一系列问题，主�
 * 可靠性能力补齐，开发工作量和难度都非常大。例如客户端面临断连重连、网络闪断、半包读写、失败缓存、网络拥塞和异常码流的处理等等，NIO编程的特点是功能开发相对容易，但是可靠性能力补齐工作量和难度都非常大
 * JDK NIO的BUG，例如臭名昭著的epoll bug，它会导致Selector空轮询，最终导致CPU 100%。官方声称在JDK1.6版本的update18修复了该问题，但是直到JDK1.7版本该问题仍旧存在，只不过该bug发生概率降低了一些而已，它并没有被根本解决
 
-### Netty的特点
+## Netty的特点
 
 * Netty的对JDK自带的NIO的API进行封装，解决上述问题，主要特点有：
 * 设计优雅 适用于各种传输类型的统一API - 阻塞和非阻塞Socket 基于灵活且可扩展的事件模型，可以清晰地分离关注点 高度可定制的线程模型 - 单线程，一个或多个线程池 真正的无连接数据报套接字支持（自3.1起）
@@ -291,7 +290,7 @@ JDK原生也有一套网络应用程序API，但是存在一系列问题，主�
 * 安全 完整的SSL / TLS和StartTLS支持
 * 社区活跃，不断更新 社区活跃，版本迭代周期短，发现的BUG可以被及时修复，同时，更多的新功能会被加入
 
-### Netty常见使用场景
+## Netty常见使用场景
 
 Netty常见的使用场景如下：
 
@@ -299,11 +298,11 @@ Netty常见的使用场景如下：
 * 游戏行业 无论是手游服务端还是大型的网络游戏，Java语言得到了越来越广泛的应用。Netty作为高性能的基础通信组件，它本身提供了TCP/UDP和HTTP协议栈。 非常方便定制和开发私有协议栈，账号登录服务器，地图服务器之间可以方便的通过Netty进行高性能的通信
 * 大数据领域 经典的Hadoop的高性能通信和序列化组件Avro的RPC框架，默认采用Netty进行跨界点通信，它的Netty Service基于Netty框架二次封装实现
 
-## Netty高性能设计
+# Netty高性能设计
 
 Netty作为异步事件驱动的网络，高性能之处主要来自于其I/O模型和线程处理模型，前者决定如何收发数据，后者决定如何处理数据
 
-### **I/O模型**
+## **I/O模型**
 
 用什么样的通道将数据发送给对方，BIO、NIO或者AIO，I/O模型在很大程度上决定了框架的性能
 
@@ -344,7 +343,7 @@ Netty的IO线程NioEventLoop由于聚合了多路复用器Selector，可以同�
 
 基于buffer操作不像传统IO的顺序操作, NIO 中可以随意地读取任意位置的数据
 
-### 线程模型
+## 线程模型
 
 数据报如何读取？读取之后的编解码在哪个线程进行，编解码后的消息如何派发，线程模型的不同，对性能的影响也非常大。
 
@@ -446,11 +445,11 @@ serverBootstrap.bind(port).addListener(future -> {
 ```
 相比传统阻塞I/O，执行I/O操作后线程会被阻塞住, 直到操作完成；异步处理的好处是不会造成线程阻塞，线程在I/O操作期间可以执行别的程序，在高并发情形下会更稳定和更高的吞吐量。
 
-## Netty架构设计
+# Netty架构设计
 
 前面介绍完Netty相关一些理论介绍，下面从功能特性、模块组件、运作过程来介绍Netty的架构设计
 
-### 功能特性
+## 功能特性
 
 ![图片](https://uploader.shimo.im/f/qPPYEUpRnPULykeQ.png!thumbnail)
 
@@ -459,7 +458,7 @@ serverBootstrap.bind(port).addListener(future -> {
 * 协议支持 HTTP、Protobuf、二进制、文本、WebSocket等一系列常见协议都支持。 还支持通过实行编码解码逻辑来实现自定义协议
 * Core核心 可扩展事件模型、通用通信API、支持零拷贝的ByteBuf缓冲对象
 
-### 模块组件
+## 模块组件
 
 **Bootstrap、ServerBootstrap**
 
@@ -540,7 +539,7 @@ ChannelHandler本身并没有提供很多方法，因为这个接口有许多的
 
 一个 Channel 包含了一个 ChannelPipeline, 而 ChannelPipeline 中又维护了一个由 ChannelHandlerContext 组成的双向链表, 并且每个 ChannelHandlerContext 中又关联着一个 ChannelHandler。入站事件和出站事件在一个双向链表中，入站事件会从链表head往后传递到最后一个入站的handler，出站事件会从链表tail往前传递到最前一个出站的handler，两种类型的handler互不干扰。
 
-### 工作原理架构
+## 工作原理架构
 
 初始化并启动Netty服务端过程如下：
 
@@ -628,7 +627,7 @@ ctx.channel().eventLoop().schedule(new Runnable() {
 , 60, TimeUnit.SECONDS);
 ```
 
-## 总结
+# 总结
 
 现在稳定推荐使用的主流版本还是Netty4，Netty5 中使用了 ForkJoinPool，增加了代码的复杂度，但是对性能的改善却不明显，所以这个版本不推荐使用，官网也没有提供下载链接。
 
