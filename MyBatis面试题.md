@@ -1,4 +1,57 @@
-# 一、MyBatis简介
+
+Table of Contents
+=================
+
+   * [一.MyBatis简介](#一mybatis简介)
+      * [1.MyBatis是什么？](#1mybatis是什么)
+      * [2.ORM是什么](#2orm是什么)
+      * [3.为什么说Mybatis是半自动ORM映射工具？它与全自动的区别在哪里？](#3为什么说mybatis是半自动orm映射工具它与全自动的区别在哪里)
+      * [4.传统JDBC开发存在的问题](#4传统jdbc开发存在的问题)
+      * [5.JDBC编程有哪些不足之处，MyBatis是如何解决这些问题的？](#5jdbc编程有哪些不足之处mybatis是如何解决这些问题的)
+      * [6.Mybatis优缺点](#6mybatis优缺点)
+      * [7.MyBatis框架适用场景](#7mybatis框架适用场景)
+      * [8.Hibernate 和 MyBatis 的区别](#8hibernate-和-mybatis-的区别)
+   * [二.MyBatis的解析和运行原理](#二mybatis的解析和运行原理)
+      * [1.MyBatis编程步骤是什么样的？](#1mybatis编程步骤是什么样的)
+      * [2.请说说MyBatis的工作原理](#2请说说mybatis的工作原理)
+      * [3.MyBatis的功能架构是怎样的](#3mybatis的功能架构是怎样的)
+      * [4.MyBatis的框架架构设计是怎么样的](#4mybatis的框架架构设计是怎么样的)
+      * [5.为什么需要预编译](#5为什么需要预编译)
+         * [(1). 定义：](#1-定义)
+         * [(2). 为什么需要预编译](#2-为什么需要预编译)
+      * [6.Mybatis都有哪些Executor执行器？它们之间的区别是什么？](#6mybatis都有哪些executor执行器它们之间的区别是什么)
+      * [7.Mybatis中如何指定使用哪一种Executor执行器？](#7mybatis中如何指定使用哪一种executor执行器)
+      * [8.Mybatis是否支持延迟加载？如果支持，它的实现原理是什么？](#8mybatis是否支持延迟加载如果支持它的实现原理是什么)
+   * [三.映射器](#三映射器)
+      * [1.#{}和${}的区别](#1和的区别)
+      * [2.模糊查询like语句该怎么写](#2模糊查询like语句该怎么写)
+      * [3.在mapper中如何传递多个参数](#3在mapper中如何传递多个参数)
+      * [4.Mybatis如何执行批量操作](#4mybatis如何执行批量操作)
+      * [5.如何获取生成的主键](#5如何获取生成的主键)
+      * [6.当实体类中的属性名和表中的字段名不一样 ，怎么办](#6当实体类中的属性名和表中的字段名不一样-怎么办)
+      * [7. Mapper 编写有哪几种方式？](#7-mapper-编写有哪几种方式)
+      * [8.什么是MyBatis的接口绑定？有哪些实现方式？](#8什么是mybatis的接口绑定有哪些实现方式)
+      * [9.使用MyBatis的mapper接口调用时有哪些要求？](#9使用mybatis的mapper接口调用时有哪些要求)
+      * [10.最佳实践中，通常一个Xml映射文件，都会写一个Dao接口与之对应，请问，这个Dao接口的工作原理是什么？Dao接口里的方法，参数不同时，方法能重载吗](#10最佳实践中通常一个xml映射文件都会写一个dao接口与之对应请问这个dao接口的工作原理是什么dao接口里的方法参数不同时方法能重载吗)
+      * [11.Mybatis的Xml映射文件中，不同的Xml映射文件，id是否可以重复？](#11mybatis的xml映射文件中不同的xml映射文件id是否可以重复)
+      * [12.简述Mybatis的Xml映射文件和Mybatis内部数据结构之间的映射关系？](#12简述mybatis的xml映射文件和mybatis内部数据结构之间的映射关系)
+      * [13.Mybatis是如何将sql执行结果封装为目标对象并返回的？都有哪些映射形式？](#13mybatis是如何将sql执行结果封装为目标对象并返回的都有哪些映射形式)
+      * [14.Xml映射文件中，除了常见的select|insert|updae|delete标签之外，还有哪些标签？](#14xml映射文件中除了常见的selectinsertupdaedelete标签之外还有哪些标签)
+      * [15.Mybatis映射文件中，如果A标签通过include引用了B标签的内容，请问，B标签能否定义在A标签的后面，还是说必须定义在A标签的前面？](#15mybatis映射文件中如果a标签通过include引用了b标签的内容请问b标签能否定义在a标签的后面还是说必须定义在a标签的前面)
+   * [四.高级查询](#四高级查询)
+      * [1.MyBatis实现一对一，一对多有几种方式，怎么操作的？](#1mybatis实现一对一一对多有几种方式怎么操作的)
+      * [2.Mybatis是否可以映射Enum枚举类？](#2mybatis是否可以映射enum枚举类)
+   * [五.动态SQL](#五动态sql)
+      * [1.Mybatis动态sql是做什么的？都有哪些动态sql？能简述一下动态sql的执行原理不？](#1mybatis动态sql是做什么的都有哪些动态sql能简述一下动态sql的执行原理不)
+   * [六.插件模块](#六插件模块)
+      * [1.Mybatis是如何进行分页的？分页插件的原理是什么？](#1mybatis是如何进行分页的分页插件的原理是什么)
+      * [2.简述Mybatis的插件运行原理，以及如何编写一个插件。](#2简述mybatis的插件运行原理以及如何编写一个插件)
+   * [七.缓存](#七缓存)
+      * [1.Mybatis的一级、二级缓存](#1mybatis的一级二级缓存)
+
+***
+
+# 一.MyBatis简介
 
 ## 1.MyBatis是什么？
 
@@ -58,10 +111,12 @@ sql语句定义、参数设置、结果集处理存在硬编码。实际项目�
 
 * SQL语句的编写工作量较大，尤其当字段多、关联表多时，对开发人员编写SQL语句的功底有一定要求
 * SQL语句依赖于数据库，导致数据库移植性差，不能随意更换数据库
+
 ## 7.MyBatis框架适用场景
 
 * MyBatis专注于SQL本身，是一个足够灵活的DAO层解决方案。
 * 对性能的要求很高，或者需求变化较多的项目，如互联网项目，MyBatis将是不错的选择。
+
 ## 8.Hibernate 和 MyBatis 的区别
 
 **相同点**
@@ -89,7 +144,8 @@ SQL优化和移植性
 
 * MyBatis 是一个小巧、方便、高效、简单、直接、半自动化的持久层框架，
 * Hibernate 是一个强大、方便、高效、复杂、间接、全自动化的持久层框架。
-# 二、MyBatis的解析和运行原理
+
+# 二.MyBatis的解析和运行原理
 
 ## 1.MyBatis编程步骤是什么样的？
 
@@ -98,6 +154,7 @@ SQL优化和移植性
 3. 通过sqlsession执行数据库操作
 4. 调用session.commit()提交事务
 5. 调用session.close()关闭会话
+
 ## 2.请说说MyBatis的工作原理
 
 在学习 MyBatis 程序之前，需要了解一下 MyBatis 工作原理，以便于理解程序。MyBatis 的工作原理如下图
@@ -112,6 +169,7 @@ SQL优化和移植性
 6. MappedStatement 对象：在 Executor 接口的执行方法中有一个 MappedStatement 类型的参数，该参数是对映射信息的封装，用于存储要映射的 SQL 语句的 id、参数等信息。
 7. 输入参数映射：输入参数类型可以是 Map、List 等集合类型，也可以是基本数据类型和 POJO 类型。输入参数映射过程类似于 JDBC 对 preparedStatement 对象设置参数的过程。
 8. 输出结果映射：输出结果类型可以是 Map、 List 等集合类型，也可以是基本数据类型和 POJO 类型。输出结果映射过程类似于 JDBC 对结果集的解析过程。
+
 ## 3.MyBatis的功能架构是怎样的
 
 ![图片](https://uploader.shimo.im/f/QnwzpFv8toAJTGee.png!thumbnail)
@@ -121,6 +179,7 @@ SQL优化和移植性
 * API接口层：提供给外部使用的接口API，开发人员通过这些本地API来操纵数据库。接口层一接收到调用请求就会调用数据处理层来完成具体的数据处理。
 * 数据处理层：负责具体的SQL查找、SQL解析、SQL执行和执行结果映射处理等。它主要的目的是根据调用的请求完成一次数据库操作。
 * 基础支撑层：负责最基础的功能支撑，包括连接管理、事务管理、配置加载和缓存处理，这些都是共用的东西，将他们抽取出来作为最基础的组件。为上层的数据处理层提供最基础的支撑。
+
 ## 4.MyBatis的框架架构设计是怎么样的
 
 ![图片](https://uploader.shimo.im/f/1Ul8w91tGWg5S6jg.png!thumbnail)
@@ -131,13 +190,14 @@ SQL优化和移植性
 2. SQL解析：当API接口层接收到调用请求时，会接收到传入SQL的ID和传入对象（可以是Map、JavaBean或者基本数据类型），Mybatis会根据SQL的ID找到对应的MappedStatement，然后根据传入参数对象对MappedStatement进行解析，解析后可以得到最终要执行的SQL语句和参数。
 3. SQL执行：将最终得到的SQL和参数拿到数据库进行执行，得到操作数据库的结果。
 4. 结果映射：将操作数据库的结果按照映射的配置进行转换，可以转换成HashMap、JavaBean或者基本数据类型，并将最终结果返回。
+
 ## 5.为什么需要预编译
 
-### ①. 定义：
+### (1). 定义：
 
 SQL 预编译指的是数据库驱动在发送 SQL 语句和参数给 DBMS 之前对 SQL 语句进行编译，这样 DBMS 执行 SQL 时，就不需要重新编译。
 
-### ②. 为什么需要预编译
+### (2). 为什么需要预编译
 
 JDBC 中使用对象 PreparedStatement 来抽象预编译语句，使用预编译。预编译阶段可以优化 SQL 的执行。预编译之后的 SQL 多数情况下可以直接执行，DBMS 不需要再次编译，越复杂的SQL，编译的复杂度将越大，预编译阶段可以合并多次操作为一个操作。同时预编译语句对象可以重复利用。把一个 SQL 预编译后产生的 PreparedStatement 对象缓存下来，下次对于同一个SQL，可以直接使用这个缓存的 PreparedState 对象。Mybatis默认情况下，将对所有的 SQL 进行预编译。
 
@@ -167,7 +227,7 @@ Mybatis仅支持association关联对象和collection关联集合对象的延迟�
 
 当然了，不光是Mybatis，几乎所有的包括Hibernate，支持延迟加载的原理都是一样的。
 
-# 三、映射器
+# 三.映射器
 
 ## 1.#{}和${}的区别
 
@@ -177,6 +237,7 @@ Mybatis仅支持association关联对象和collection关联集合对象的延迟�
 * 变量替换后，#{} 对应的变量自动加上单引号 ‘’；变量替换后，${} 对应的变量不会加上单引号 ‘’
 * #{} 可以有效的防止SQL注入，提高系统安全性；${} 不能防止SQL 注入
 * #{} 的变量替换是在DBMS 中；${} 的变量替换是在 DBMS 外
+
 ## 2.模糊查询like语句该怎么写
 
 1. ’%${question}%’ 可能引起SQL注入，不推荐
@@ -189,6 +250,7 @@ Mybatis仅支持association关联对象和collection关联集合对象的延迟�
   select id,sex,age,username,password from person where username LIKE #{pattern}
 </select>
 ```
+
 ## 3.在mapper中如何传递多个参数
 
 **方法1：顺序传参法**
@@ -327,9 +389,10 @@ public interface EmployeeMapper {   
     </insert>
 </mapper>
 ```
+
 ## 5.如何获取生成的主键
 
-**对于支持主键自增的数据库（MySQL）**
+**对于支持主键自增的数据库**（MySQL）
 
 ```
 <insert id="insertUser" useGeneratedKeys="true" keyProperty="userId" >
@@ -339,7 +402,7 @@ public interface EmployeeMapper {   
 </insert>
 ```
 parameterType 可以不写，Mybatis可以推断出传入的数据类型。如果想要访问主键，那么应当parameterType 应当是java实体或者Map。这样数据在插入之后 可以通过ava实体或者Map 来获取主键值。通过 getUserId获取主键
-**不支持主键自增的数据库（Oracle）**
+**不支持主键自增的数据库**（Oracle）
 
 对于像Oracle这样的数据，没有提供主键自增的功能，而是使用序列的方式获取自增主键。
 
@@ -402,9 +465,10 @@ order ： AFTER
     <result property="price" column="order_price" />
 </reslutMap>
 ```
-## 7.Mapper 编写有哪几种方式？
+	
+## 7. Mapper 编写有哪几种方式？
 
-**第一种：接口实现类继承 SqlSessionDaoSupport：使用此种方法需要编写mapper 接口，mapper 接口实现类、mapper.xml 文件。**
+**第一种：接口实现类继承 SqlSessionDaoSupport：使用此种方法需要编写mapper 接口，mapper 接口实现类、mapper.xml 文件**。
 
 （1）在 sqlMapConfig.xml 中配置 mapper.xml 的位置
 
@@ -427,7 +491,9 @@ mapper 方法中可以 this.getSqlSession()进行数据增删改查。
     ref="sqlSessionFactory"></property>
 </bean>
 ```
-**第二种：使用 org.mybatis.spring.mapper.MapperFactoryBean：**
+
+**第二种：使用 org.mybatis.spring.mapper.MapperFactoryBean**：
+
 （1）在 sqlMapConfig.xml 中配置 mapper.xml 的位置，如果 mapper.xml 和mappre 接口的名称相同且在同一个目录，这里可以不用配置
 
 ```
@@ -449,7 +515,9 @@ mapper 方法中可以 this.getSqlSession()进行数据增删改查。
     <property name="sqlSessionFactory" ref="sqlSessionFactory" />
 </bean>
 ```
-**第三种：使用 mapper 扫描器：**
+
+**第三种：使用 mapper 扫描器**：
+
 （1）mapper.xml 文件编写：
 
 mapper.xml 中的 namespace 为 mapper 接口的地址；
@@ -473,6 +541,7 @@ mapper 接口中的方法名和 mapper.xml 中的定义的 statement 的 id 保�
 </bean>
 ```
 （4）使用扫描器后从 spring 容器中获取 mapper 的实现对象。
+
 ## 8.什么是MyBatis的接口绑定？有哪些实现方式？
 
 接口绑定，就是在MyBatis中任意定义接口，然后把接口里面的方法和SQL语句绑定，我们直接调用接口方法就可以，这样比起原来了SqlSession提供的方法我们可以有更加灵活的选择和设置。
@@ -481,12 +550,14 @@ mapper 接口中的方法名和 mapper.xml 中的定义的 statement 的 id 保�
 
 * 通过注解绑定，就是在接口的方法上面加上 @Select、@Update等注解，里面包含Sql语句来绑定；
 * 通过xml里面写SQL来绑定， 在这种情况下，要指定xml映射文件里面的namespace必须为接口的全路径名。当Sql语句比较简单时候，用注解绑定， 当SQL语句比较复杂时候，用xml绑定，一般用xml绑定的比较多。
+
 ## 9.使用MyBatis的mapper接口调用时有哪些要求？
 
 1. Mapper接口方法名和mapper.xml中定义的每个sql的id相同。
 2. Mapper接口方法的输入参数类型和mapper.xml中定义的每个sql 的parameterType的类型相同。
 3. Mapper接口方法的输出参数类型和mapper.xml中定义的每个sql的resultType的类型相同。
 4. Mapper.xml文件中的namespace即是mapper接口的类路径。
+
 ## 10.最佳实践中，通常一个Xml映射文件，都会写一个Dao接口与之对应，请问，这个Dao接口的工作原理是什么？Dao接口里的方法，参数不同时，方法能重载吗
 
 Dao接口，就是人们常说的Mapper接口，接口的全限名，就是映射文件中的namespace的值，接口的方法名，就是映射文件中MappedStatement的id值，接口方法内的参数，就是传递给sql的参数。Mapper接口是没有实现类的，当调用接口方法时，接口全限名+方法名拼接字符串作为key值，可唯一定位一个MappedStatement，举例：com.mybatis3.mappers.StudentDao.findStudentById，可以唯一找到namespace为com.mybatis3.mappers.StudentDao下面id = findStudentById的MappedStatement。在Mybatis中，每一个<select>、<insert>、<update>、<delete>标签，都会被解析为一个MappedStatement对象。
@@ -523,7 +594,7 @@ Dao接口的工作原理是JDK动态代理，Mybatis运行时会使用JDK动态�
 
 原理是，Mybatis解析A标签，发现A标签引用了B标签，但是B标签尚未解析到，尚不存在，此时，Mybatis会将A标签标记为未解析状态，然后继续解析余下的标签，包含B标签，待所有标签解析完毕，Mybatis会重新解析那些被标记为未解析的标签，此时再解析A标签时，B标签已经存在，A标签也就可以正常解析完成了。
 
-# 四、高级查询
+# 四.高级查询
 
 ## 1.MyBatis实现一对一，一对多有几种方式，怎么操作的？
 
@@ -537,7 +608,7 @@ Mybatis可以映射枚举类，不单可以映射枚举类，Mybatis可以映射
 
 TypeHandler有两个作用，一是完成从javaType至jdbcType的转换，二是完成jdbcType至javaType的转换，体现为setParameter()和getResult()两个方法，分别代表设置sql问号占位符参数和获取列查询结果。
 
-# 五、动态SQL
+# 五.动态SQL
 
 ## 1.Mybatis动态sql是做什么的？都有哪些动态sql？能简述一下动态sql的执行原理不？
 
@@ -545,7 +616,7 @@ Mybatis动态sql可以让我们在Xml映射文件内，以标签的形式编写�
 
 其执行原理为，使用OGNL从sql参数对象中计算表达式的值，根据表达式的值动态拼接sql，以此来完成动态sql的功能。
 
-# 六、插件模块
+# 六.插件模块
 
 ## 1.Mybatis是如何进行分页的？分页插件的原理是什么？
 
@@ -561,7 +632,7 @@ Mybatis仅可以编写针对ParameterHandler、ResultSetHandler、StatementHandl
 
 实现Mybatis的Interceptor接口并复写intercept()方法，然后在给插件编写注解，指定要拦截哪一个接口的哪些方法即可，记住，别忘了在配置文件中配置你编写的插件。
 
-# 七、缓存
+# 七.缓存
 
 ## 1.Mybatis的一级、二级缓存
 
