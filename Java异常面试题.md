@@ -2,27 +2,27 @@
 Table of Contents
 =================
 
-   * [一、Java异常架构与异常关键字](#一java异常架构与异常关键字)
+   * [一.Java异常架构与异常关键字](#一java异常架构与异常关键字)
       * [1.Java异常简介](#1java异常简介)
       * [2.Java异常架构](#2java异常架构)
-         * [①. Throwable](#-throwable)
-         * [②. Error（错误）](#-error错误)
-         * [③. Exception（异常）](#-exception异常)
-         * [④. 受检异常与非受检异常](#-受检异常与非受检异常)
+         * [(1). Throwable](#1-throwable)
+         * [(2). Error（错误）](#2-error错误)
+         * [(3). Exception（异常）](#3-exception异常)
+         * [(4). 受检异常与非受检异常](#4-受检异常与非受检异常)
       * [3.Java异常关键字](#3java异常关键字)
-   * [二、Java异常处理](#二java异常处理)
+   * [二.Java异常处理](#二java异常处理)
       * [1.声明异常](#1声明异常)
       * [2.抛出异常](#2抛出异常)
       * [3.捕获异常](#3捕获异常)
       * [4.如何选择异常类型](#4如何选择异常类型)
       * [5.常见异常处理方式](#5常见异常处理方式)
-         * [①. 直接抛出异常](#-直接抛出异常)
-         * [②. 封装异常再抛出](#-封装异常再抛出)
-         * [③. 捕获异常](#-捕获异常)
-         * [④. 自定义异常](#-自定义异常)
-         * [⑤. try-catch-finally](#-try-catch-finally)
-         * [⑥. try-with-resource](#-try-with-resource)
-   * [三、Java异常常见面试题](#三java异常常见面试题)
+         * [(1). 直接抛出异常](#1-直接抛出异常)
+         * [(2). 封装异常再抛出](#2-封装异常再抛出)
+         * [(3). 捕获异常](#3-捕获异常)
+         * [(4). 自定义异常](#4-自定义异常)
+         * [(5). try-catch-finally](#5-try-catch-finally)
+         * [(6). try-with-resource](#6-try-with-resource)
+   * [三.Java异常常见面试题](#三java异常常见面试题)
       * [1. Error 和 Exception 区别是什么？](#1-error-和-exception-区别是什么)
       * [2. 运行时异常和一般异常(受检异常)区别是什么？](#2-运行时异常和一般异常受检异常区别是什么)
       * [3. JVM 是如何处理异常的？](#3-jvm-是如何处理异常的)
@@ -34,10 +34,10 @@ Table of Contents
       * [9. 类 ExampleA 继承 Exception，类 ExampleB 继承ExampleA。](#9-类-examplea-继承-exception类-exampleb-继承examplea)
       * [10. 常见的 RuntimeException 有哪些？](#10-常见的-runtimeexception-有哪些)
       * [11. Java常见异常有哪些](#11-java常见异常有哪些)
-   * [四、Java异常处理最佳实践](#四java异常处理最佳实践)
+   * [四.Java异常处理最佳实践](#四java异常处理最佳实践)
       * [1. 在 finally 块中清理资源或者使用 try-with-resource 语句](#1-在-finally-块中清理资源或者使用-try-with-resource-语句)
-         * [①. 使用 finally 代码块](#-使用-finally-代码块)
-         * [②.  Java 7 的 try-with-resource 语法](#--java-7-的-try-with-resource-语法)
+         * [(1). 使用 finally 代码块](#1-使用-finally-代码块)
+         * [(2).  Java 7 的 try-with-resource 语法](#2--java-7-的-try-with-resource-语法)
       * [2. 优先明确的异常](#2-优先明确的异常)
       * [3. 对异常进行文档说明](#3-对异常进行文档说明)
       * [4. 使用描述性消息抛出异常](#4-使用描述性消息抛出异常)
@@ -50,11 +50,11 @@ Table of Contents
       * [11. 使用标准异常](#11-使用标准异常)
       * [12. 异常会影响性能](#12-异常会影响性能)
       * [13. 总结](#13-总结)
-      * [异常处理-阿里巴巴Java开发手册](#异常处理-阿里巴巴java开发手册)
+   * [异常处理-阿里巴巴Java开发手册](#异常处理-阿里巴巴java开发手册)
 
 ***
 
-# 一、Java异常架构与异常关键字
+# 一.Java异常架构与异常关键字
 
 ## 1.Java异常简介
 
@@ -66,7 +66,7 @@ Java异常机制可以使程序中异常处理代码和正常业务代码分离�
 
 ![图片](https://uploader.shimo.im/f/XKGAVvRIscQNtFIm.png!thumbnail)
 
-### ①. Throwable
+### (1). Throwable
 
 Throwable 是 Java 语言中所有错误与异常的超类。
 
@@ -74,7 +74,7 @@ Throwable 包含两个子类：Error（错误）和 Exception（异常），它�
 
 Throwable 包含了其线程创建时线程执行堆栈的快照，它提供了 printStackTrace() 等接口用于获取堆栈跟踪数据等信息。
 
-### ②. Error（错误）
+### (2). Error（错误）
 
 **定义**：Error 类及其子类。程序中无法处理的错误，表示运行应用程序中出现了严重的错误。
 
@@ -82,7 +82,7 @@ Throwable 包含了其线程创建时线程执行堆栈的快照，它提供了 
 
 这些错误是不受检异常，非代码性错误。因此，当此类错误发生时，应用程序不应该去处理此类错误。按照Java惯例，我们是不应该实现任何新的Error子类的！
 
-### ③. Exception（异常）
+### (3). Exception（异常）
 
 程序本身可以捕获并且可以处理的异常。Exception 这种异常又分为两类：运行时异常和编译时异常。
 
@@ -100,7 +100,7 @@ RuntimeException 异常会由 Java 虚拟机自动抛出并自动捕获（就算
 
 特点: Java 编译器会检查它。如果程序中出现此类异常，比如 ClassNotFoundException（没有找到指定的类异常），IOException（IO流异常），要么通过throws进行声明抛出，要么通过try-catch进行捕获处理，否则不能通过编译。在程序中，通常不会自定义该类异常，而是直接使用系统提供的异常类。该异常我们必须手动在代码里添加捕获语句来处理该异常。
 
-### ④. 受检异常与非受检异常
+### (4). 受检异常与非受检异常
 
 Java 的所有异常可以分为受检异常（checked exception）和非受检异常（unchecked exception）。
 
@@ -119,7 +119,7 @@ Java 的所有异常可以分为受检异常（checked exception）和非受检�
 * finally – finally语句块总是会被执行。它主要用于回收在try块里打开的物力资源(如数据库连接、网络连接和磁盘文件)。只有finally块，执行完成之后，才会回来执行try或者catch块中的return或者throw语句，如果finally中使用了return或者throw等终止方法的语句，则就不会跳回执行，直接停止。
 * throw – 用于抛出异常。
 * throws – 用在方法签名中，用于声明该方法可能抛出的异常。
-# 二、Java异常处理
+# 二.Java异常处理
 
 ![图片](https://uploader.shimo.im/f/FzYC9SOFufwOhckX.png!thumbnail)
 
@@ -135,6 +135,7 @@ Java 通过面向对象的方法进行异常处理，一旦方法抛出异常，
 
 * 非检查异常（Error、RuntimeException 或它们的子类）不可使用 throws 关键字来声明要抛出的异常。
 * 一个方法出现编译时异常，就需要 try-catch/ throws 处理，否则会导致编译错误。
+
 ## 2.抛出异常
 
 如果你觉得解决不了某些异常问题，且不需要调用者处理，那么你可以抛出异常。
@@ -153,7 +154,7 @@ throw关键字作用是在方法内部抛出一个Throwable类型的异常。任
 
 ## 5.常见异常处理方式
 
-### ①. 直接抛出异常
+### (1). 直接抛出异常
 
 通常，应该捕获那些知道如何处理的异常，将不知道如何处理的异常继续传递下去。传递异常可以在方法签名处使用 throws 关键字声明可能会抛出的异常。
 
@@ -168,7 +169,7 @@ private static void readFile(String filePath) throws IOException {
     reader.close();
 }
 ```
-### ②. 封装异常再抛出
+### (2). 封装异常再抛出
 
 有时我们会从 catch 中抛出一个异常，目的是为了改变异常的类型。多用于在多系统集成时，当某个子系统故障，异常类型可能有多种，可以用统一的异常类型向外暴露，不需暴露太多内部异常细节。
 
@@ -183,7 +184,7 @@ private static void readFile(String filePath) throws MyException {    
     }
 }
 ```
-### ③. 捕获异常
+### (3). 捕获异常
 
 在一个 try-catch 语句块中可以捕获多个异常类型，并对不同类型的异常做出不同的处理
 
@@ -210,7 +211,7 @@ private static void readFile(String filePath) {
     }
 }
 ```
-### ④. 自定义异常
+### (4). 自定义异常
 
 习惯上，定义一个异常类应包含两个构造函数，一个无参构造函数和一个带有详细描述信息的构造函数（Throwable 的 toString 方法会打印这些详细信息，调试时很有用）
 
@@ -223,7 +224,7 @@ public class MyException extends Exception {
     // ...
 }
 ```
-### ⑤. try-catch-finally
+### (5). try-catch-finally
 
 当方法中发生异常，异常处之后的代码不会再执行，如果之前获取了一些本地资源需要释放，则需要在方法正常结束时和 catch 语句中都调用释放本地资源的代码，显得代码比较繁琐，finally 语句可以解决这个问题。
 
@@ -269,7 +270,7 @@ readFile method catch block.
 readFile method finally block.
 ```
 可见，即使 catch 中包含了 return 语句，finally 子句依然会执行。若 finally 中也包含 return 语句，finally 中的 return 会覆盖前面的 return.
-### ⑥. try-with-resource
+### (6). try-with-resource
 
 上面例子中，finally 中的 close 方法也可能抛出 IOException, 从而覆盖了原始异常。JAVA 7 提供了更优雅的方式来实现资源的自动释放，自动释放的资源需要是实现了 AutoCloseable 接口的类。
 
@@ -283,7 +284,8 @@ private  static void tryWithResourceTest(){
 }
 ```
 try 代码块退出时，会自动调用 scanner.close 方法，和把 scanner.close 方法放在 finally 代码块中不同的是，若 scanner.close 抛出异常，则会被抑制，抛出的仍然为原始异常。被抑制的异常会由 addSusppressed 方法添加到原来的异常，如果想要获取被抑制的异常列表，可以调用 getSuppressed 方法来获取。
-# 三、Java异常常见面试题
+
+# 三.Java异常常见面试题
 
 ## 1. Error 和 Exception 区别是什么？
 
@@ -386,6 +388,7 @@ public static int getInt() {
 }
 ```
 执行结果：40
+
 ## 9. 类 ExampleA 继承 Exception，类 ExampleB 继承ExampleA。
 
 有如下代码片断：
@@ -475,7 +478,7 @@ java.lang.NumberFormatException：数字格式异常。当试图将一个String�
 
 java.lang.StringIndexOutOfBoundsException：字符串索引越界异常。当使用索引值访问某个字符串中的字符，而该索引值小于0或大于等于序列大小时，抛出该异常。
 
-# 四、Java异常处理最佳实践
+# 四.Java异常处理最佳实践
 
 在 Java 中处理异常并不是一个简单的事情。不仅仅初学者很难理解，即使一些有经验的开发者也需要花费很多时间来思考如何处理异常，包括需要处理哪些异常，怎样处理等等。这也是绝大多数开发团队都会制定一些规则来规范进行异常处理的原因。而团队之间的这些规范往往是截然不同的。
 
@@ -504,7 +507,7 @@ public void doNotCloseResourceInTry() {
 问题就是，只有没有异常抛出的时候，这段代码才可以正常工作。try 代码块内代码会正常执行，并且资源可以正常关闭。但是，使用 try 代码块是有原因的，一般调用一个或多个可能抛出异常的方法，而且，你自己也可能会抛出一个异常，这意味着代码可能不会执行到 try 代码块的最后部分。结果就是，你并没有关闭资源。
 所以，你应该把清理工作的代码放到 finally 里去，或者使用 try-with-resource 特性。
 
-### ①. 使用 finally 代码块
+### (1). 使用 finally 代码块
 
 与前面几行 try 代码块不同，finally 代码块总是会被执行。不管 try 代码块成功执行之后还是你在 catch 代码块中处理完异常后都会执行。因此，你可以确保你清理了所有打开的资源。
 
@@ -528,7 +531,7 @@ public void closeResourceInFinally() {
     }
 }
 ```
-### ②.  Java 7 的 try-with-resource 语法
+### (2).  Java 7 的 try-with-resource 语法
 
 如果你的资源实现了 AutoCloseable 接口，你可以使用这个语法。大多数的 Java 标准资源都继承了这个接口。当你在 try 子句中打开资源，资源会在 try 代码块执行后或异常处理后自动关闭。
 
@@ -682,6 +685,7 @@ public void wrapException(String input) throws MyBusinessException {
 }
 ```
 因此，仅仅当想要处理异常时才去捕获，否则只需要在方法签名中声明让调用者去处理。
+
 ## 9. 包装异常时不要抛弃原始的异常
 
 捕获标准异常并包装为自定义异常是一个很常见的做法。这样可以添加更为具体的异常信息并能够做针对的异常处理。
@@ -720,7 +724,7 @@ public void wrapException(String input) throws MyBusinessException {
 
 异常不仅仅是一个错误控制机制，也是一个通信媒介。因此，为了和同事更好的合作，一个团队必须要制定出一个最佳实践和规则，只有这样，团队成员才能理解这些通用概念，同时在工作中使用它。
 
-## 异常处理-阿里巴巴Java开发手册
+# 异常处理-阿里巴巴Java开发手册
 
 1. 【强制】Java 类库中定义的可以通过预检查方式规避的RuntimeException异常不应该通过catch 的方式来处理，比如：NullPointerException，IndexOutOfBoundsException等等。 说明：无法通过预检查的异常除外，比如，在解析字符串形式的数字时，可能存在数字格式错误，不得不通过catch NumberFormatException来实现。 正例：if (obj != null) {…} 反例：try { obj.method(); } catch (NullPointerException e) {…}
 2. 【强制】异常不要用来做流程控制，条件控制。 说明：异常设计的初衷是解决程序运行中的各种意外情况，且异常的处理效率比条件判断方式要低很多。
