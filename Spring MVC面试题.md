@@ -1,4 +1,46 @@
-# 一、概述
+
+Table of Contents
+=================
+
+   * [一.概述](#一概述)
+      * [1.什么是Spring MVC？简单介绍下你对Spring MVC的理解？](#1什么是spring-mvc简单介绍下你对spring-mvc的理解)
+      * [2.Spring MVC的优点](#2spring-mvc的优点)
+   * [二.核心组件](#二核心组件)
+      * [1.Spring MVC的主要组件？](#1spring-mvc的主要组件)
+      * [2.什么是DispatcherServlet](#2什么是dispatcherservlet)
+      * [3.什么是Spring MVC框架的控制器？](#3什么是spring-mvc框架的控制器)
+      * [4.Spring MVC的控制器是不是单例模式,如果是,有什么问题,怎么解决？](#4spring-mvc的控制器是不是单例模式如果是有什么问题怎么解决)
+   * [三.工作原理](#三工作原理)
+      * [1.请描述Spring MVC的工作流程？描述一下 DispatcherServlet 的工作流程？](#1请描述spring-mvc的工作流程描述一下-dispatcherservlet-的工作流程)
+   * [四.MVC框架](#四mvc框架)
+      * [1.MVC是什么？MVC设计模式的好处有哪些](#1mvc是什么mvc设计模式的好处有哪些)
+   * [五.常用注解](#五常用注解)
+      * [1.注解原理是什么](#1注解原理是什么)
+      * [2.Spring MVC常用的注解有哪些？](#2spring-mvc常用的注解有哪些)
+      * [3.SpingMvc中的控制器的注解一般用哪个,有没有别的注解可以替代？](#3spingmvc中的控制器的注解一般用哪个有没有别的注解可以替代)
+      * [4.@Controller注解的作用](#4controller注解的作用)
+      * [5.@RequestMapping注解的作用](#5requestmapping注解的作用)
+      * [6.@ResponseBody注解的作用](#6responsebody注解的作用)
+      * [7.@PathVariable和@RequestParam的区别](#7pathvariable和requestparam的区别)
+   * [六.其他](#六其他)
+      * [1.Spring MVC与Struts2区别](#1spring-mvc与struts2区别)
+      * [2.Spring MVC怎么样设定重定向和转发的？](#2spring-mvc怎么样设定重定向和转发的)
+      * [3.Spring MVC怎么和AJAX相互调用的？](#3spring-mvc怎么和ajax相互调用的)
+      * [4.如何解决POST请求中文乱码问题，GET的又如何处理呢？](#4如何解决post请求中文乱码问题get的又如何处理呢)
+      * [5.Spring MVC的异常处理？](#5spring-mvc的异常处理)
+      * [6.如果在拦截请求中，我想拦截get方式提交的方法,怎么配置](#6如果在拦截请求中我想拦截get方式提交的方法怎么配置)
+      * [7.怎样在方法里面得到Request,或者Session？](#7怎样在方法里面得到request或者session)
+      * [8.如果想在拦截的方法里面得到从前台传入的参数,怎么得到？](#8如果想在拦截的方法里面得到从前台传入的参数怎么得到)
+      * [9.如果前台有很多个参数传入,并且这些参数都是一个对象的,那么怎么样快速得到这个对象？](#9如果前台有很多个参数传入并且这些参数都是一个对象的那么怎么样快速得到这个对象)
+      * [10.Spring MVC中函数的返回值是什么？](#10spring-mvc中函数的返回值是什么)
+      * [11.Spring MVC用什么对象从后台向前台传递数据的？](#11spring-mvc用什么对象从后台向前台传递数据的)
+      * [12.怎么样把ModelMap里面的数据放入Session里面？](#12怎么样把modelmap里面的数据放入session里面)
+      * [13.Spring MVC里面拦截器是怎么写的](#13spring-mvc里面拦截器是怎么写的)
+      * [14.介绍一下 WebApplicationContext](#14介绍一下-webapplicationcontext)
+
+***
+
+# 一.概述
 
 ## 1.什么是Spring MVC？简单介绍下你对Spring MVC的理解？
 
@@ -10,7 +52,8 @@ Spring MVC是一个基于Java的实现了MVC设计模式的请求驱动类型的
 2. 与Spring框架集成（如IoC容器、AOP等）；
 3. 清晰的角色分配：前端控制器(dispatcherServlet) , 请求到处理器映射（handlerMapping), 处理器适配器（HandlerAdapter), 视图解析器（ViewResolver）。
 4. 支持各种请求资源的映射策略。
-# 二、核心组件
+
+# 二.核心组件
 
 ## 1.Spring MVC的主要组件？
 
@@ -48,7 +91,7 @@ Spring的MVC框架是围绕DispatcherServlet来设计的，它用来处理所有
 
 答：是单例模式,所以在多线程访问的时候有线程安全问题,不要用同步,会影响性能的,解决方案是在控制器里面不能写字段。
 
-# 三、工作原理
+# 三.工作原理
 
 ## 1.请描述Spring MVC的工作流程？描述一下 DispatcherServlet 的工作流程？
 
@@ -66,7 +109,7 @@ Spring的MVC框架是围绕DispatcherServlet来设计的，它用来处理所有
 
 ![图片](https://uploader.shimo.im/f/ES7HZ7cUrwoMmv1t.png!thumbnail)
 
-# 四、MVC框架
+# 四.MVC框架
 
 ## 1.MVC是什么？MVC设计模式的好处有哪些
 
@@ -76,7 +119,8 @@ mvc设计模式的好处
 
 1. 分层设计，实现了业务系统各个组件之间的解耦，有利于业务系统的可扩展性，可维护性。
 2. 有利于系统的并行开发，提升开发效率。
-# 五、常用注解
+
+# 五.常用注解
 
 ## 1.注解原理是什么
 
@@ -87,6 +131,7 @@ mvc设计模式的好处
 * @RequestMapping：用于处理请求 url 映射的注解，可用于类或方法上。用于类上，则表示类中的所有响应请求的方法都是以该地址作为父路径。
 * @RequestBody：注解实现接收http请求的json数据，将json转换为java对象。
 * @ResponseBody：注解实现将conreoller方法返回对象转化为json对象响应给客户。
+
 ## 3.SpingMvc中的控制器的注解一般用哪个,有没有别的注解可以替代？
 
 答：一般用@Controller注解,也可以使用@RestController,@RestController注解相当于@ResponseBody ＋ @Controller,表示是表现层,除此之外，一般不用别的注解代替。
@@ -99,6 +144,7 @@ mvc设计模式的好处
 
 * 在Spring MVC 的配置文件中定义MyController 的bean 对象。
 * 在Spring MVC 的配置文件中告诉Spring 该到哪里去找标记为@Controller 的Controller 控制器。
+
 ## 5.@RequestMapping注解的作用
 
 RequestMapping是一个用来处理请求地址映射的注解，可用于类或方法上。用于类上，表示类中的所有响应请求的方法都是以该地址作为父路径。
@@ -119,17 +165,19 @@ RequestMapping注解有六个属性，下面我们把她分成三类进行说明
 
 * params： 指定request中必须包含某些参数值是，才让该方法处理。
 * headers： 指定request中必须包含某些指定的header值，才能让该方法处理请求。
+
 ## 6.@ResponseBody注解的作用
 
 * 作用： 该注解用于将Controller的方法返回的对象，通过适当的HttpMessageConverter转换为指定格式后，写入到Response对象的body数据区。
 * 使用时机：返回的数据不是html标签的页面，而是其他某种格式的数据时（如json、xml等）使用；
+
 ## 7.@PathVariable和@RequestParam的区别
 
 请求路径上有个id的变量值，可以通过@PathVariable来获取 @RequestMapping(value = “/page/{id}”, method = RequestMethod.GET)
 
 @RequestParam用来获得静态的URL请求入参 spring注解时action里用到。
 
-# 六、其他
+# 六.其他
 
 ## 1.Spring MVC与Struts2区别
 
@@ -143,10 +191,12 @@ RequestMapping注解有六个属性，下面我们把她分成三类进行说明
 2. 请求参数的接收方式不一样。Spring MVC是使用方法的形参接收请求的参数，基于方法的开发，线程安全，可以设计为单例或者多例的开发，推荐使用单例模式的开发（执行效率更高），默认就是单例开发模式。struts2是通过类的成员变量接收请求的参数，是基于类的开发，线程不安全，只能设计为多例的开发。
 3. Struts采用值栈存储请求和响应的数据，通过OGNL存取数据，Spring MVC通过参数解析器是将request请求内容解析，并给方法形参赋值，将数据和视图封装成ModelAndView对象，最后又将ModelAndView中的模型数据通过reques域传输到页面。Jsp视图解析器默认使用jstl。
 4. 与spring整合不一样。Spring MVC是spring框架的一部分，不需要整合。在企业项目中，Spring MVC使用更多一些。
+
 ## 2.Spring MVC怎么样设定重定向和转发的？
 
 * 转发：在返回值前面加"forward:"，譬如"forward:user.do?name=method4"
 * 重定向：在返回值前面加"redirect:"，譬如"redirect:http://www.baidu.com"
+
 ## 3.Spring MVC怎么和AJAX相互调用的？
 
 通过Jackson框架就可以把Java里面的对象直接转化成Js可以识别的Json对象。具体步骤如下 ：
@@ -154,9 +204,10 @@ RequestMapping注解有六个属性，下面我们把她分成三类进行说明
 1. 加入Jackson.jar
 2. 在配置文件中配置json的映射
 3. 在接受Ajax方法里面可以直接返回Object,List等,但方法前面要加上@ResponseBody注解。
+
 ## 4.如何解决POST请求中文乱码问题，GET的又如何处理呢？
 
-**（1）解决post请求乱码问题：**
+**（1）解决post请求乱码问题**：
 
 在web.xml中配置一个CharacterEncodingFilter过滤器，设置成utf-8；
 
@@ -174,7 +225,7 @@ RequestMapping注解有六个属性，下面我们把她分成三类进行说明
     <url-pattern>/*</url-pattern>
 </filter-mapping>
 ```
-**（2）get请求中文参数出现乱码解决方法有两个：**
+**（2）get请求中文参数出现乱码解决方法有两个**：
 ①修改tomcat配置文件添加编码与工程编码一致，如下：
 
 ```
@@ -185,6 +236,7 @@ RequestMapping注解有六个属性，下面我们把她分成三类进行说明
 String userName = new String(request.getParamter(“userName”).getBytes(“ISO8859-1”),“utf-8”)
 ```
 ISO8859-1是tomcat默认编码，需要将tomcat编码后的内容按utf-8编码。
+
 ## 5.Spring MVC的异常处理？
 
 答：可以将异常抛给Spring框架，由Spring框架来处理；我们只需要配置简单的异常处理器，在异常处理器中添视图页面即可。
