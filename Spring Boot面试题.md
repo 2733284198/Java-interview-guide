@@ -1,4 +1,55 @@
-# 一、概述
+
+Table of Contents
+=================
+
+   * [一.概述](#一概述)
+      * [1.什么是 Spring Boot？](#1什么是-spring-boot)
+      * [2.Spring Boot 有哪些优点？](#2spring-boot-有哪些优点)
+      * [3.Spring Boot 的核心注解是哪个？它主要由哪几个注解组成的？](#3spring-boot-的核心注解是哪个它主要由哪几个注解组成的)
+   * [二.配置](#二配置)
+      * [1.什么是 JavaConfig？](#1什么是-javaconfig)
+      * [2.Spring Boot 自动配置原理是什么？](#2spring-boot-自动配置原理是什么)
+      * [3.你如何理解 Spring Boot 配置加载顺序？](#3你如何理解-spring-boot-配置加载顺序)
+      * [4.什么是 YAML？](#4什么是-yaml)
+      * [5. YAML 配置的优势在哪里 ?](#5-yaml-配置的优势在哪里-)
+      * [6.Spring Boot 是否可以使用 XML 配置 ?](#6spring-boot-是否可以使用-xml-配置-)
+      * [7.spring boot 核心配置文件是什么？bootstrap.properties 和 application.properties 有何区别 ?](#7spring-boot-核心配置文件是什么bootstrapproperties-和-applicationproperties-有何区别-)
+      * [8.什么是 Spring Profiles？](#8什么是-spring-profiles)
+      * [9.如何在自定义端口上运行 Spring Boot 应用程序？](#9如何在自定义端口上运行-spring-boot-应用程序)
+   * [三.安全](#三安全)
+      * [1.如何实现 Spring Boot 应用程序的安全性？](#1如何实现-spring-boot-应用程序的安全性)
+      * [2.比较一下 Spring Security 和 Shiro 各自的优缺点 ?](#2比较一下-spring-security-和-shiro-各自的优缺点-)
+      * [3.Spring Boot 中如何解决跨域问题 ?](#3spring-boot-中如何解决跨域问题-)
+      * [4.什么是 CSRF 攻击？](#4什么是-csrf-攻击)
+   * [四.监视器](#四监视器)
+      * [1.Spring Boot 中的监视器是什么？](#1spring-boot-中的监视器是什么)
+      * [2.如何在 Spring Boot 中禁用 Actuator 端点安全性？](#2如何在-spring-boot-中禁用-actuator-端点安全性)
+      * [3.我们如何监视所有 Spring Boot 微服务？](#3我们如何监视所有-spring-boot-微服务)
+   * [五.整合第三方项目](#五整合第三方项目)
+      * [1.什么是 WebSockets？](#1什么是-websockets)
+      * [2.什么是 Spring Data ?](#2什么是-spring-data-)
+      * [3.什么是 Spring Batch？](#3什么是-spring-batch)
+      * [4.什么是 FreeMarker 模板？](#4什么是-freemarker-模板)
+      * [5.如何集成 Spring Boot 和 ActiveMQ？](#5如何集成-spring-boot-和-activemq)
+      * [6.什么是 Apache Kafka？](#6什么是-apache-kafka)
+      * [7.什么是 Swagger？你用 Spring Boot 实现了它吗？](#7什么是-swagger你用-spring-boot-实现了它吗)
+      * [8.前后端分离，如何维护接口文档 ?](#8前后端分离如何维护接口文档-)
+   * [六.其他](#六其他)
+      * [1.如何重新加载 Spring Boot 上的更改，而无需重新启动服务器？Spring Boot项目如何热部署？](#1如何重新加载-spring-boot-上的更改而无需重新启动服务器spring-boot项目如何热部署)
+      * [2.您使用了哪些 starter maven 依赖项？](#2您使用了哪些-starter-maven-依赖项)
+      * [3.Spring Boot 中的 starter 到底是什么 ?](#3spring-boot-中的-starter-到底是什么-)
+      * [4.spring-boot-starter-parent 有什么用 ?](#4spring-boot-starter-parent-有什么用-)
+      * [5.Spring Boot 打成的 jar 和普通的 jar 有什么区别 ?](#5spring-boot-打成的-jar-和普通的-jar-有什么区别-)
+      * [6.运行 Spring Boot 有哪几种方式？](#6运行-spring-boot-有哪几种方式)
+      * [7.Spring Boot 需要独立的容器运行吗？](#7spring-boot-需要独立的容器运行吗)
+      * [8.如何使用 Spring Boot 实现异常处理？](#8如何使用-spring-boot-实现异常处理)
+      * [9.如何使用 Spring Boot 实现分页和排序？](#9如何使用-spring-boot-实现分页和排序)
+      * [10.微服务中如何实现 session 共享 ?](#10微服务中如何实现-session-共享-)
+      * [11.Spring Boot 中如何实现定时任务 ?](#11spring-boot-中如何实现定时任务-)
+
+***
+
+# 一.概述
 
 ## 1.什么是 Spring Boot？
 
@@ -13,6 +64,7 @@ Spring Boot 主要有如下优点：
 3. 提供了一系列大型项目通用的非业务性功能，例如：内嵌服务器、安全管理、运行数据监控、运行状况检查和外部化配置等。
 4. 没有代码生成，也不需要XML配置。
 5. 避免大量的 Maven 导入和各种版本冲突。
+
 ## 3.Spring Boot 的核心注解是哪个？它主要由哪几个注解组成的？
 
 启动类上面的注解是@SpringBootApplication，它也是 Spring Boot 的核心注解，主要组合包含了以下 3 个注解：
@@ -20,7 +72,8 @@ Spring Boot 主要有如下优点：
 1. @SpringBootConfiguration：组合了 @Configuration 注解，实现配置文件的功能。
 2. @EnableAutoConfiguration：打开自动配置的功能，也可以关闭某个自动配置的选项，如关闭数据源自动配置功能： @SpringBootApplication(exclude = { DataSourceAutoConfiguration.class })。
 3. @ComponentScan：Spring组件扫描。
-# 二、配置
+
+# 二.配置
 
 ## 1.什么是 JavaConfig？
 
@@ -29,6 +82,7 @@ Spring JavaConfig 是 Spring 社区的产品，它提供了配置 Spring IoC 容
 1. 面向对象的配置。由于配置被定义为 JavaConfig 中的类，因此用户可以充分利用 Java 中的面向对象功能。一个配置类可以继承另一个，重写它的@Bean 方法等。
 2. 减少或消除 XML 配置。基于依赖注入原则的外化配置的好处已被证明。但是，许多开发人员不希望在 XML 和 Java 之间来回切换。JavaConfig 为开发人员提供了一种纯 Java 方法来配置与 XML 配置概念相似的 Spring 容器。从技术角度来讲，只使用 JavaConfig 配置类来配置容器是可行的，但实际上很多人认为将JavaConfig 与 XML 混合匹配是理想的。
 3. 类型安全和重构友好。JavaConfig 提供了一种类型安全的方法来配置 Spring容器。由于 Java 5.0 对泛型的支持，现在可以按类型而不是按名称检索 bean，不需要任何强制转换或基于字符串的查找。
+
 ## 2.Spring Boot 自动配置原理是什么？
 
 注解 @EnableAutoConfiguration, @Configuration, @ConditionalOnClass 就是自动配置的核心，
@@ -48,6 +102,7 @@ Spring JavaConfig 是 Spring 社区的产品，它提供了配置 Spring IoC 容
 * 系统环境变量；
 * 命令行参数；
 * 等等……
+
 ## 4.什么是 YAML？
 
 YAML 是一种人类可读的数据序列化语言。它通常用于配置文件。与属性文件相比，如果我们想要在配置文件中添加复杂的属性，YAML 文件就更加结构化，而且更少混淆。可以看出 YAML 具有分层配置数据。
@@ -74,6 +129,7 @@ spring boot 核心的两个配置文件：
 
 * bootstrap (. yml 或者 . properties)：boostrap 由父 ApplicationContext 加载的，比 applicaton 优先加载，配置在应用程序上下文的引导阶段生效。一般来说我们在 Spring Cloud Config 或者 Nacos 中会用到它。且 boostrap 里面的属性不能被覆盖；
 * application (. yml 或者 . properties)： 由ApplicatonContext 加载，用于 spring boot 项目的自动化配置。
+
 ## 8.什么是 Spring Profiles？
 
 Spring Profiles 允许用户根据配置文件（dev，test，prod 等）来注册 bean。因此，当应用程序在开发中运行时，只有某些 bean 可以加载，而在 PRODUCTION中，某些其他 bean 可以加载。假设我们的要求是 Swagger 文档仅适用于 QA 环境，并且禁用所有其他文档。这可以使用配置文件来完成。Spring Boot 使得使用配置文件非常简单。
@@ -82,7 +138,7 @@ Spring Profiles 允许用户根据配置文件（dev，test，prod 等）来注�
 
 为了在自定义端口上运行 Spring Boot 应用程序，您可以在application.properties 中指定端口。server.port = 8090
 
-# 三、安全
+# 三.安全
 
 ## 1.如何实现 Spring Boot 应用程序的安全性？
 
@@ -95,6 +151,7 @@ Spring Profiles 允许用户根据配置文件（dev，test，prod 等）来注�
 1. Spring Security 是一个重量级的安全管理框架；Shiro 则是一个轻量级的安全管理框架
 2. Spring Security 概念复杂，配置繁琐；Shiro 概念简单、配置简单
 3. Spring Security 功能强大；Shiro 功能简单
+
 ## 3.Spring Boot 中如何解决跨域问题 ?
 
 跨域可以在前端通过 JSONP 来解决，但是 JSONP 只可以发送 GET 请求，无法发送其他类型的请求，在 RESTful 风格的应用中，就显得非常鸡肋，因此我们推荐在后端通过 （CORS，Cross-origin resource sharing） 来解决跨域问题。这种解决方案并非 Spring Boot 特有的，在传统的 SSM 框架中，就可以通过 CORS 来解决跨域问题，只不过之前我们是在 XML 文件中配置 CORS ，现在可以通过实现WebMvcConfigurer接口然后重写addCorsMappings方法解决跨域问题。
@@ -139,7 +196,7 @@ public class CorsConfig {
 
 CSRF 代表跨站请求伪造。这是一种攻击，迫使最终用户在当前通过身份验证的Web 应用程序上执行不需要的操作。CSRF 攻击专门针对状态改变请求，而不是数据窃取，因为攻击者无法查看对伪造请求的响应。
 
-# 四、监视器
+# 四.监视器
 
 ## 1.Spring Boot 中的监视器是什么？
 
@@ -153,7 +210,7 @@ Spring boot actuator 是 spring 启动框架中的重要功能之一。Spring bo
 
 Spring Boot 提供监视器端点以监控各个微服务的度量。这些端点对于获取有关应用程序的信息（如它们是否已启动）以及它们的组件（如数据库等）是否正常运行很有帮助。但是，使用监视器的一个主要缺点或困难是，我们必须单独打开应用程序的知识点以了解其状态或健康状况。想象一下涉及 50 个应用程序的微服务，管理员将不得不击中所有 50 个应用程序的执行终端。为了帮助我们处理这种情况，我们将使用位于的开源项目。 它建立在 Spring Boot Actuator 之上，它提供了一个 Web UI，使我们能够可视化多个应用程序的度量。
 
-# 五、整合第三方项目
+# 五.整合第三方项目
 
 ## 1.什么是 WebSockets？
 
@@ -163,6 +220,7 @@ WebSocket 是一种计算机通信协议，通过单个 TCP 连接提供全双�
 2. WebSocket 是全双工的 -客户端和服务器通信是相互独立的。
 3. 单个 TCP 连接 -初始连接使用 HTTP，然后将此连接升级到基于套接字的连接。然后这个单一连接用于所有未来的通信
 4. Light -与 http 相比，WebSocket 消息数据交换要轻得多。
+
 ## 2.什么是 Spring Data ?
 
 Spring Data 是 Spring 的一个子项目。用于简化数据库访问，支持NoSQL 和 关系数据存储。其主要目标是使数据库的访问变得方便快捷。Spring Data 具有如下特点：
@@ -205,7 +263,7 @@ Swagger 广泛用于可视化 API，使用 Swagger UI 为前端开发人员提�
 
 前后端分离开发日益流行，大部分情况下，我们都是通过 Spring Boot 做前后端分离开发，前后端分离一定会有接口文档，不然会前后端会深深陷入到扯皮中。一个比较笨的方法就是使用 word 或者 md 来维护接口文档，但是效率太低，接口一变，所有人手上的文档都得变。在 Spring Boot 中，这个问题常见的解决方案是 Swagger ，使用 Swagger 我们可以快速生成一个接口文档网站，接口一旦发生变化，文档就会自动更新，所有开发工程师访问这一个在线网站就可以获取到最新的接口文档，非常方便。
 
-# 六、其他
+# 六.其他
 
 ## 1.如何重新加载 Spring Boot 上的更改，而无需重新启动服务器？Spring Boot项目如何热部署？
 
@@ -217,6 +275,7 @@ Swagger 广泛用于可视化 API，使用 Swagger UI 为前端开发人员提�
     <artifactId>spring-boot-devtools</artifactId>
 </dependency>
 ```
+
 ## 2.您使用了哪些 starter maven 依赖项？
 
 使用了下面的一些依赖项
@@ -241,6 +300,7 @@ Swagger 广泛用于可视化 API，使用 Swagger UI 为前端开发人员提�
 5. 自动化的资源过滤。
 6. 自动化的插件配置。
 7. 针对 application.properties 和 application.yml 的资源过滤，包括通过 profile 定义的不同环境的配置文件，例如 application-dev.properties 和 application-dev.yml。
+
 ## 5.Spring Boot 打成的 jar 和普通的 jar 有什么区别 ?
 
 Spring Boot 项目最终打包成的 jar 是可执行 jar ，这种 jar 可以直接通过 java -jar xxx.jar 命令来运行，这种 jar 不可以作为普通的 jar 被其他项目依赖，即使依赖了也无法使用其中的类。
@@ -252,6 +312,7 @@ Spring Boot 的 jar 无法被其他项目依赖，主要还是他和普通 jar �
 1. 打包用命令或者放到容器中运行
 2. 用 Maven/ Gradle 插件运行
 3. 直接执行 main 方法运行
+
 ## 7.Spring Boot 需要独立的容器运行吗？
 
 可以不需要，内置了 Tomcat/ Jetty 等容器。
@@ -260,6 +321,7 @@ Spring Boot 的 jar 无法被其他项目依赖，主要还是他和普通 jar �
 
 1. 继承spring-boot-starter-parent项目
 2. 导入spring-boot-dependencies项目依赖
+
 ## 8.如何使用 Spring Boot 实现异常处理？
 
 Spring 提供了一种使用 ControllerAdvice 处理异常的非常有用的方法。 我们通过实现一个 ControlerAdvice 类，来处理控制器类抛出的所有异常。
