@@ -43,7 +43,7 @@
 - [ZooKeeper面试题](https://github.com/Java-Super-Air/Java-interview-guide/blob/master/ZooKeeper%E9%9D%A2%E8%AF%95%E9%A2%98.md)
 - [Netty面试题](https://github.com/Java-Super-Air/Java-interview-guide/blob/master/Netty%E9%9D%A2%E8%AF%95%E9%A2%98.md)
 
-# 程序员面试攻略
+# 面试攻略
 
 - [面试前的准备](https://github.com/Java-Super-Air/Java-interview-guide/blob/master/%E7%A8%8B%E5%BA%8F%E5%91%98%E9%9D%A2%E8%AF%95%E6%94%BB%E7%95%A5%EF%BC%9A%E9%9D%A2%E8%AF%95%E5%89%8D%E7%9A%84%E5%87%86%E5%A4%87.md)
 - [面试中的技巧](https://github.com/Java-Super-Air/Java-interview-guide/blob/master/%E7%A8%8B%E5%BA%8F%E5%91%98%E9%9D%A2%E8%AF%95%E6%94%BB%E7%95%A5%EF%BC%9A%E9%9D%A2%E8%AF%95%E4%B8%AD%E7%9A%84%E6%8A%80%E5%B7%A7.md)
