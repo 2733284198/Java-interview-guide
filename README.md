@@ -8,17 +8,17 @@
 >
 >**视频资料请关注微信公众号【Java架构筑基】免费获取**
 
-![](https://upload-images.jianshu.io/upload_images/21105806-d4d66f5389e79675.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](https://upload-images.jianshu.io/upload_images/21105806-bf0cf243b55b89f3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 ***
 
 # 技术进阶
 
-**技术进阶，技术分享，请点击这里**—>[技术进阶](https://github.com/Java-Super-Air/Java-Technology-Progress)
+- **技术进阶，技术分享，请点击这里**—>[技术进阶](https://github.com/Java-Super-Air/Java-Technology-Progress)
 
 # 程序人生
 
-**程序人生，分享来自一线互联网大厂大牛的独白**—>[程序人生](https://github.com/Java-Super-Air/Java-Career)
+- **程序人生，分享来自一线互联网大厂大牛的独白**—>[程序人生](https://github.com/Java-Super-Air/Java-Career)
 
 ***
 
